@@ -19,7 +19,7 @@ public class Game
   public Guid HostId { get; set; }
   public List<Guid> UserIds { get; set; }
 
-  public List<Question> Questions { get; set; }
+  public List<GameQuestion> Questions { get; set; }
 
   /// <summary>
   /// [<see cref="User.Id"/>, score]
