@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using RickAndMortyKahoot.Models.Exceptions;
 using RickAndMortyKahoot.Services.Question;
 using RickAndMortyKahoot.Stores;
 using System.Text.Json;

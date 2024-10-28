@@ -1,8 +1,5 @@
 /// <reference path="C:/Users/Ejer/AppData/Roaming/npm/node_modules/@types/jquery/index.d.ts" />
 import KahootHub from "../KahootHub/index.js";
-KahootHub.start().then(() => {
-    console.log('KahootHub started');
-});
 $('#create-game').on('click', () => {
     const json = $("#user-data").val();
     if (!(typeof json === 'string'))
@@ -26,5 +23,9 @@ $('#join-game-form').on('submit', (e) => {
     KahootHub.broadcast('Connect', userId, inviteCode);
 });
 const userJson = $('#user-data').val();
-if (typeof userJson === 'string')
+if (typeof userJson === 'string') {
     localStorage.setItem('user', userJson);
+    KahootHub.start().then(() => {
+        console.log('KahootHub started');
+    });
+}

@@ -3,10 +3,6 @@
 import { User } from "../models/User.js";
 import KahootHub from "../KahootHub/index.js";
 
-KahootHub.start().then(() => {
-  console.log('KahootHub started');
-});
-
 $('#create-game').on('click', () => {
   const json = $("#user-data").val();
   if (!(typeof json === 'string')) return alert('Invalid JSON');
@@ -33,4 +29,10 @@ $('#join-game-form').on('submit', (e) => {
 });
 
 const userJson = $('#user-data').val();
-if (typeof userJson === 'string') localStorage.setItem('user', userJson);
+if (typeof userJson === 'string') {
+  localStorage.setItem('user', userJson);
+  
+  KahootHub.start().then(() => {
+    console.log('KahootHub started');
+  });
+}

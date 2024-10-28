@@ -5,6 +5,8 @@ namespace RickAndMortyKahoot.Stores;
 
 public class ProjectStore
 {
+  public static ProjectStore Instance { get; set; } = new ProjectStore();
+  private ProjectStore() { }
   public Dictionary<string, Guid> Connections { get; set; } = [];
   public Dictionary<Guid, User> Users { get; set; } = [];
   public Dictionary<Guid, Game> Games { get; set; } = [];

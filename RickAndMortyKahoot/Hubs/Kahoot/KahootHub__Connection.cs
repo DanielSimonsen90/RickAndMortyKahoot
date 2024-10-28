@@ -1,6 +1,7 @@
 ﻿using RickAndMortyKahoot.Models.Games;
 using RickAndMortyKahoot.Models.Exceptions;
 using RickAndMortyKahoot.Models.Users;
+using RickAndMortyKahoot.Stores;
 
 namespace RickAndMortyKahoot.Hubs.Kahoot;
 
@@ -33,12 +34,30 @@ public partial class KahootHub
 
     await DispatchHubEvent(gameId, Events.USER_LEAVE, user);
   });
-  
+  public override async Task OnConnectedAsync()
+  {
+    // Check if the connection exists in the store
+    if (store.Connections.TryGetValue(Context.ConnectionId, out Guid userId)
+        && store.Users.TryGetValue(userId, out User? user))
+    {
+      // Try to find the game for this user
+      if (store.FindGameContainingUser(userId) is Game game)
+      {
+        game.UserIds.Add(userId);
+        store.Games[game.Id] = game;
+        await AddConnectionToGroup(game.Id, user.Id);
+        await DispatchHubEvent(game.Id, Events.USER_JOIN, user);
+      }
+    }
+
+    await base.OnConnectedAsync();
+  }
+
   public override async Task OnDisconnectedAsync(Exception? exception)
   {
-    if (store.Connections[Context.ConnectionId] is Guid userId
+    if (store.Connections.TryGetValue(Context.ConnectionId, out Guid userId)
       && store.FindGameContainingUser(userId) is Game game
-      && store.Users[userId] is User user)
+      && store.Users.TryGetValue(userId, out User? user))
     {
       game.UserIds.Remove(userId);
       store.Games[game.Id] = game;

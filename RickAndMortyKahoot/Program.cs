@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Register stores
-builder.Services.AddSingleton<ProjectStore>();
+builder.Services.AddSingleton(ProjectStore.Instance);
 
 // Register Services
 builder.Services.AddSingleton(_ => RickAndMortyApiFactory.Create());
