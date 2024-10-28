@@ -1,4 +1,4 @@
-﻿namespace RickAndMortyKahoot.Models.UserModels;
+﻿namespace RickAndMortyKahoot.Models.Users;
 
 public class UserPayload(string username)
 {

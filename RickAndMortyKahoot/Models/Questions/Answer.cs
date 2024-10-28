@@ -1,4 +1,4 @@
-﻿namespace RickAndMortyKahoot.Models.QuestionModels;
+﻿namespace RickAndMortyKahoot.Models.Questions;
 
 public class Answer(Guid questionId, int index, Guid userId)
 {

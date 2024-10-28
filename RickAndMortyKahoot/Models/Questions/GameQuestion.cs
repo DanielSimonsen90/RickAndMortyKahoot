@@ -1,4 +1,4 @@
-﻿namespace RickAndMortyKahoot.Models.QuestionModels;
+﻿namespace RickAndMortyKahoot.Models.Questions;
 
 public class GameQuestion(string title, string answer, string[] choices) : Question(title, answer, choices)
 {

@@ -1,12 +1,12 @@
-﻿using RickAndMortyKahoot.Models.QuestionModels;
-using RickAndMortyKahoot.Models.UserModels;
+﻿using RickAndMortyKahoot.Models.Questions;
+using RickAndMortyKahoot.Models.Users;
 namespace RickAndMortyKahoot.Models;
 
 public class Game
 {
   public const int DEFAULT_QUESTIONS_LENGTH = 10;
 
-  public Game(Guid hostId, List<Question> questions)
+  public Game(Guid hostId, List<GameQuestion> questions)
   {
     HostId = hostId;
     UserIds = [hostId];
@@ -19,12 +19,7 @@ public class Game
   public Guid HostId { get; set; }
   public List<Guid> UserIds { get; set; }
 
-  public List<Question> Questions { get; set; }
-
-  /// <summary>
-  /// [<see cref="User.Id"/>, score]
-  /// </summary>
-  public Dictionary<Guid, int> Scores { get; set; } = [];
+  public List<GameQuestion> Questions { get; set; }
 
   public bool IsActive { get; set; } = false;
 }
