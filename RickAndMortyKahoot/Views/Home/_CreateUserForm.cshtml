@@ -1,0 +1,17 @@
+﻿@using RickAndMortyKahoot.Controllers
+@using RickAndMortyKahoot.Models.Users
+@model UserPayload
+
+<dialog id="create-user">
+  <h1>Hello!</h1>
+  <form asp-action="@(nameof(HomeController.UserRegisterSubmit))" method="post">
+    <div class="input-group">
+      <label asp-for="Username">Username</label>
+      <input asp-for="Username" required />
+    </div>
+    <div class="button-panel">
+      <button type="button" class="cancel" onclick="closeModal('create-user')">Cancel</button>
+      <button type="submit" class="primary brand">Register user</button>
+    </div>
+  </form>
+</dialog>
