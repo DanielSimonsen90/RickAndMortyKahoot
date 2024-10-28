@@ -6,7 +6,6 @@
   <title>@ViewData["Title"] - RickAndMortyKahoot</title>
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/RickAndMortyKahoot.styles.css" asp-append-version="true" />
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -42,9 +41,8 @@
       &copy; 2024 - RickAndMortyKahoot - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
   </footer>
-  <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="~/js/site.js" asp-append-version="true"></script>
+  <script src="~/js/pages/site.js" asp-append-version="true"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

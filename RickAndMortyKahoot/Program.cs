@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.Hosting;
 using RickAndMorty.Net.Api.Factory;
 using RickAndMorty.Net.Api.Service;
-using RickAndMortyKahoot.Hubs;
+using RickAndMortyKahoot.Hubs.Kahoot;
 using RickAndMortyKahoot.Models.Questions;
 using RickAndMortyKahoot.Services.Question;
 using RickAndMortyKahoot.Services.RickAndMortyApi;

@@ -8,20 +8,19 @@ public partial class QuestionService
   private static List<QuestionModel> DefineCharacterQuestions(IEnumerable<Character> characters)
   {
     // How many characters
-    QuestionModel howManyCharacters = DefineQuestions(characters,
-      question: _ => "How many characters rae there in Rick and Morty?",
-      questionAroundProp: _ => characters.Count(),
-      amountOfQuestions: 1).First();
+    QuestionModel howManyCharacters = DefineQuestionsByListCount(characters,
+      question: _ => "How many characters are there in Rick and  Morty?",
+      list: _ => characters,
+      take: 1).First();
 
     // How many family members are in the Smith family?
-    QuestionModel howManySmithMembers = DefineQuestions(characters,
-      question: _ => $"How many members are there in the Smith family?",
-      questionAroundProp: character => character.Name,
-      filter: name => name.Split(' ').Last() == "Smith",
-      amountOfQuestions: 1).First();
-
+    QuestionModel howManySmithMembers = DefineQuestionCountingPropertyValues(characters,
+      question: "How many members are there in the Smith family?",
+      countFilter: model => model.Name.Split(' ').Last() == "Smith",
+      distincyBy: model => model.Name);
+    
     // How many characters are alive | dead | unknown?
-    List<QuestionModel> characterStatuses = DefineQuestionsFromPropertyValues(characters,
+    var characterStatuses = DefineQuestionsFromPropertyValues(characters,
       questionAroundProp: character => character.Status,
       question: (status, character) => $"How many characters are currently **{Enum.GetName(status)}** in Rick and Morty?");
 
@@ -32,16 +31,16 @@ public partial class QuestionService
 
     // How many characters originate from {character.Location}?
     List<QuestionModel> characterLocations = DefineQuestionsFromPropertyValues(characters,
-      questionAroundProp: character => character.Location,
-      question: (location, character) => $"How many characters originate from \"{location.Name}\"?");
+      questionAroundProp: character => character.Location.Name,
+      question: (location, character) => $"How many characters originate from \"{location}\"?");
 
     // How many episodes does {character.Name} feature in?
-    List<QuestionModel> characterEpisodes = DefineQuestions(characters,
+    List<QuestionModel> characterEpisodes = DefineQuestionsByListCount(characters,
       question: character => $"How many episodes does {character.Name} feature in?",
-      questionAroundProp: character => character.Episode.Count());
+      list: character => character.Episode);
 
     // How many characters are <gender>?
-    List<QuestionModel> characterGenders = DefineQuestionsFromPropertyValues(characters,
+    List <QuestionModel> characterGenders = DefineQuestionsFromPropertyValues(characters,
       questionAroundProp: character => character.Gender,
       question: (gender, character) => $"How many characters are **{Enum.GetName(gender)}**?");
 

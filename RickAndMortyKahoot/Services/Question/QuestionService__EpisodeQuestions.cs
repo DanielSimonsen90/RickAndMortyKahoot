@@ -1,5 +1,4 @@
 ﻿using RickAndMorty.Net.Api.Models.Domain;
-using RickAndMortyKahoot.Utils;
 using QuestionModel = RickAndMortyKahoot.Models.Questions.Question;
 
 namespace RickAndMortyKahoot.Services.Question;
@@ -9,15 +8,15 @@ public partial class QuestionService
   private static List<QuestionModel> DefineEpisodeQuestions(IEnumerable<Episode> episodes)
   {
     // How many episodes
-    QuestionModel howManyEpisodesTotal = DefineQuestions(episodes,
+    QuestionModel howManyEpisodesTotal = DefineQuestionsByListCount(episodes,
       question: _ => "How many episodes are there in Rick and Morty?",
-      questionAroundProp: _ => episodes.Count(),
-      amountOfQuestions: 1).First();
+      list: _ => episodes,
+      take: 1).First();
 
     // How many characters were in <episode>?
-    List<QuestionModel> howManyCharactersInEpisode = DefineQuestions(episodes,
+    List<QuestionModel> howManyCharactersInEpisode = DefineQuestionsByListCount(episodes,
       question: episode => $"How many characters were in the episode \"{episode.Name}\" ({episode.EpisodeCode})?",
-      questionAroundProp: episode => episode.Characters.Count());
+      list: episode => episode.Characters);
 
     // When did <episode> air?
     List<QuestionModel> whenDidEpisodeAir = DefineQuestions(episodes,

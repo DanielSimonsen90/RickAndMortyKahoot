@@ -13,22 +13,22 @@
 }
 else
 {
-  @* <input type="hidden" id="user-data" value="@(JsonSerializer.Serialize(Model))" /> *@
+  <input type="hidden" id="user-data" value="@(JsonSerializer.Serialize(Model))" />
   <input type="hidden" id="displayname" value="@(Model.Username)" />
 
   <h1>Hi, @(Model.Username)!</h1>
   <div class="button-panel">
-    <button type="button" class="primary">Join game</button>
+    <button id="join-game" type="button" class="primary">Join game</button>
     <p class="or">or</p>
-    <button type="button" class="primary">Create game</button>
+    <button id="create-game" type="button" class="primary">Create game</button>
   </div>
 
-  <input type="text" id="message" />
-  <input type="submit" id="sendmessage" />
-  <div id="discussion"></div>
+  <dialog id="join-game-modal">
+    <h1>You could join a game here</h1>
+  </dialog>
 }
 
 @section scripts {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-  <script type="module" src="js/use-kahoothub.js"></script>
+  <script type="module" src="js/pages/home.js"></script>
 }

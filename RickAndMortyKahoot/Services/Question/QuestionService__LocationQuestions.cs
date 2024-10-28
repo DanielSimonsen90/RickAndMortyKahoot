@@ -7,10 +7,10 @@ public partial class QuestionService
   private static List<QuestionModel> DefineLocationQuestions(IEnumerable<Location> locations)
   {
     // How many locations
-    QuestionModel howManyLocations = DefineQuestions(locations,
+    QuestionModel howManyLocations = DefineQuestionsByListCount(locations,
       question: _ => "How many locations are there in Rick and Morty?",
-      questionAroundProp: _ => locations.Count().ToString(),
-      amountOfQuestions: 1).First();
+      list: _ => locations,
+      take: 1).First();
 
     // How many types of locations?
     QuestionModel howManyTypes = DefineQuestionCountingPropertyValues(locations,
@@ -23,13 +23,13 @@ public partial class QuestionService
       countDistinctProp: location => location.Dimension);
 
     // How many residents are there in <name>
-    List<QuestionModel> howManyResidentsInName = DefineQuestionsFromPropertyValues(locations,
-      questionAroundProp: location => location.Residents.Count(),
-      question: (count, location) => $"How many residents are there in {location.Name}?");
+    List<QuestionModel> howManyResidentsInName = DefineQuestionsByListCount(locations,
+      question: location => $"How many residents are there in {location.Name}?",
+      list: location => location.Residents);
 
     // In what dimension is <name> in?
     List<QuestionModel> whatDimensionIsNameIn = DefineQuestions(locations,
-      question: location => $"In what dimension is {location.Name} in?",
+      question: location => $"In what dimension is \"{location.Name}\" in?",
       questionAroundProp: location => location.Dimension);
 
     return

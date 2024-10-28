@@ -1,0 +1,40 @@
+﻿@using RickAndMortyKahoot.Models.Users
+@using RickAndMortyKahoot.Stores
+@model Game
+@inject ProjectStore store
+
+<section class="game">
+  <header>
+    @if (store.Users.TryGetValue(Model.HostId, out User? host))
+    {
+      <h1>@(host?.Username)'s "kahoot" game</h1>
+    }
+    else
+    {
+      <h1>Someone's "kahoot" game</h1>
+    }
+    <p>Game code: <span>@(Model.InviteCode)</span></p>
+  </header>
+  <ul class="user-list">
+    @foreach (Guid userId in Model.UserIds)
+    {
+      @if (store.Users.TryGetValue(userId, out User? user))
+      {
+        <li>@(user?.Username)</li>
+      }
+      else
+      {
+        <li>Player-@(userId)</li>
+      }
+    }
+  </ul>
+
+  @if (store.CurrentUser?.Id == Model.HostId)
+  {
+    <button id="start-game" type="button">Start game</button>
+  }
+</section>
+
+@section scripts {
+  <script src="~/js/pages/game.js" type="module"></script>
+}
