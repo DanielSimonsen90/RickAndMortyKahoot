@@ -1,6 +1,7 @@
 ﻿namespace RickAndMortyKahoot.Models.Users;
+#nullable disable
 
-public class UserPayload(string username)
+public class UserPayload()
 {
-  public string Username { get; set; } = username;
+  public string Username { get; set; }
 }

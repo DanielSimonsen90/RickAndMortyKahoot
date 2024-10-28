@@ -1,8 +1,23 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using RickAndMortyKahoot.Controllers
+@using RickAndMortyKahoot.Models.Users
+@using System.Text.Json
+@model User?
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<button onclick="openModal('create-user')">Register</button>
+@if (Model is null)
+{
+  <partial name="_CreateUserForm" model="new UserPayload()" />
+}
+else
+{
+  <input type="hidden" id="user-data" value="@(JsonSerializer.Serialize(Model))" />
+  <h1>Hi, @(Model.Username)!</h1>
+  <div class="button-panel">
+    <button type="button" class="primary">Join game</button>
+    <p class="or">or</p>
+    <button type="button" class="primary">Create game</button>
+  </div>
+}
