@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Hosting;
 using RickAndMorty.Net.Api.Factory;
 using RickAndMorty.Net.Api.Service;
+using RickAndMortyKahoot.Hubs;
 using RickAndMortyKahoot.Models.Questions;
 using RickAndMortyKahoot.Services.Question;
 using RickAndMortyKahoot.Services.RickAndMortyApi;
@@ -38,6 +40,13 @@ builder.Services.AddSingleton(provider =>
   return new ScoreService(questionService);
 });
 
+// Register SignalR
+builder.Services.AddSignalR();
+builder.Services.AddResponseCompression(opts =>
+{
+  opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["application/octet-stream"]);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,10 +58,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
+
+// SignalR
+app.UseResponseCompression();
+app.MapHub<KahootHub>("/kahoothub");
 
 app.MapControllerRoute(
     name: "default",
