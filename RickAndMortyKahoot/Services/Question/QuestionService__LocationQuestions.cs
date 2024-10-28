@@ -4,7 +4,7 @@ namespace RickAndMortyKahoot.Services.Question;
 
 public partial class QuestionService
 {
-  public static List<QuestionModel> DefineLocationQuestions(IEnumerable<Location> locations)
+  private static List<QuestionModel> DefineLocationQuestions(IEnumerable<Location> locations)
   {
     // How many locations
     QuestionModel howManyLocations = DefineQuestions(locations,

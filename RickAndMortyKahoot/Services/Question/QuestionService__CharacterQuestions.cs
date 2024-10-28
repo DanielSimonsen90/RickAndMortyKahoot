@@ -5,7 +5,7 @@ namespace RickAndMortyKahoot.Services.Question;
 
 public partial class QuestionService
 {
-  public static List<QuestionModel> DefineCharacterQuestions(IEnumerable<Character> characters)
+  private static List<QuestionModel> DefineCharacterQuestions(IEnumerable<Character> characters)
   {
     // How many characters
     QuestionModel howManyCharacters = DefineQuestions(characters,

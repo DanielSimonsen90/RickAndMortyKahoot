@@ -6,7 +6,7 @@ namespace RickAndMortyKahoot.Services.Question;
 
 public partial class QuestionService
 {
-  public static List<QuestionModel> DefineEpisodeQuestions(IEnumerable<Episode> episodes)
+  private static List<QuestionModel> DefineEpisodeQuestions(IEnumerable<Episode> episodes)
   {
     // How many episodes
     QuestionModel howManyEpisodesTotal = DefineQuestions(episodes,
