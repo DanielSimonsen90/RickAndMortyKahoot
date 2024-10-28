@@ -15,9 +15,22 @@ $('#create-game').on('click', () => {
   const questionAmount = $("#question-amount").val();
   if (questionAmount !== undefined && !(typeof questionAmount === 'number')) return alert('Invalid question amount');
 
-  KahootHub.broadcast('CreateGame', user.Id, questionAmount ?? null);
+  KahootHub.broadcast('CreateGame', user.id, questionAmount ?? null);
 });
 
 $('#join-game').on('click', () => {
   openModal("join-game-modal");
 });
+
+$('#join-game-form').on('submit', (e) => {
+  e.preventDefault();
+
+  const [userId, inviteCode] = ["UserId", "InviteCode"].map(name => $(`input[name=${name}]`).val());
+  if (!(typeof userId === 'string')) return alert('Invalid user id');
+  if (!(typeof inviteCode === 'string')) return alert('Invalid invite code');
+
+  KahootHub.broadcast('Connect', userId, inviteCode);
+});
+
+const userJson = $('#user-data').val();
+if (typeof userJson === 'string') localStorage.setItem('user', userJson);

@@ -1,4 +1,5 @@
 ﻿using RickAndMortyKahoot.Models.Questions;
+namespace RickAndMortyKahoot.Models.Games;
 
 public class Game
 {

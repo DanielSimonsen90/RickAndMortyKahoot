@@ -1,4 +1,4 @@
-﻿using RickAndMortyKahoot.Models;
+﻿using RickAndMortyKahoot.Models.Games;
 using RickAndMortyKahoot.Models.Exceptions;
 using RickAndMortyKahoot.Models.Questions;
 using RickAndMortyKahoot.Services.RickAndMortyApi;

@@ -1,11 +1,13 @@
 ﻿@using RickAndMortyKahoot.Models.Users
+@using RickAndMortyKahoot.Models.Games
 @using RickAndMortyKahoot.Stores
-@model Game
+@using RickAndMortyKahoot.ViewModels
+@model GameViewModel
 @inject ProjectStore store
 
 <section class="game">
   <header>
-    @if (store.Users.TryGetValue(Model.HostId, out User? host))
+    @if (store.Users.TryGetValue(Model.Game.HostId, out User? host))
     {
       <h1>@(host?.Username)'s "kahoot" game</h1>
     }
@@ -13,10 +15,10 @@
     {
       <h1>Someone's "kahoot" game</h1>
     }
-    <p>Game code: <span>@(Model.InviteCode)</span></p>
+    <p>Game code: <span>@(Model.Game.InviteCode)</span></p>
   </header>
   <ul class="user-list">
-    @foreach (Guid userId in Model.UserIds)
+    @foreach (Guid userId in Model.Game.UserIds)
     {
       @if (store.Users.TryGetValue(userId, out User? user))
       {
@@ -29,7 +31,7 @@
     }
   </ul>
 
-  @if (store.CurrentUser?.Id == Model.HostId)
+  @if (Model.CurrentUserId == Model.Game.HostId)
   {
     <button id="start-game" type="button">Start game</button>
   }

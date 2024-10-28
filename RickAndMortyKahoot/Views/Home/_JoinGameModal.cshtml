@@ -1,0 +1,20 @@
+﻿@using RickAndMortyKahoot.Controllers
+@using RickAndMortyKahoot.Models.Games
+@using RickAndMortyKahoot.Stores
+@model JoinGamePayload
+@inject ProjectStore store
+
+<dialog id="join-game-modal">
+  <h1>Join someone's "kahoot" game</h1>
+  <form id="join-game-form" method="post">
+    <input type="hidden" name="UserId" value="@(Model.CurrentUserId)" />
+    <div class="input-group">
+      <label asp-for="InviteCode">InviteCode</label>
+      <input asp-for="InviteCode" required />
+    </div>
+    <div class="button-panel">
+      <button type="button" class="cancel" onclick="closeModal('join-game-modal')">Cancel</button>
+      <button type="submit" class="primary brand">Join game</button>
+    </div>
+  </form>
+</dialog>

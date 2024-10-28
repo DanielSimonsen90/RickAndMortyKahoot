@@ -20,6 +20,9 @@ class KahootHub {
       // @ts-ignore
       this.on(eventName, handler);
     }
+
+    // @ts-ignore
+    this.on('Ping', console.log);
   }
 
   private _connection: signalR.HubConnection;
@@ -39,7 +42,7 @@ class KahootHub {
     ...args: KahootHubActions[ActionName]
   ) {
     const broadcast = () => {
-      logAction(actionName, ...args);
+      logAction(actionName, args);
       this._connection.invoke(actionName, ...args);
     }
 

@@ -1,7 +1,7 @@
 import { Guid } from "../types";
 
 export type User = {
-  Id: Guid;
-  Username: string;
-  GameId: Guid;
+  id: Guid;
+  username: string;
+  gameId: Guid;
 }

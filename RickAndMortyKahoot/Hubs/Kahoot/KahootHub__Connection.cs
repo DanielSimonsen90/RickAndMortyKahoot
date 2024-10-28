@@ -1,4 +1,4 @@
-﻿using RickAndMortyKahoot.Models;
+﻿using RickAndMortyKahoot.Models.Games;
 using RickAndMortyKahoot.Models.Exceptions;
 using RickAndMortyKahoot.Models.Users;
 
@@ -6,20 +6,21 @@ namespace RickAndMortyKahoot.Hubs.Kahoot;
 
 public partial class KahootHub
 {
-  public async Task Connect(Guid userId, Guid gameId)
+  public async Task Connect(string userId, string inviteCode) => await OnRecieveAction(Actions.CONNECT, async () =>
   {
-    User user = store.Users[userId] ?? throw new InvalidUserException();
-    Game game = store.Games[gameId] ?? throw new InvalidGameException();
+    User user = store.Users[Guid.Parse(userId)] ?? throw new InvalidUserException();
+    Game game = store.FindGameByInviteCode(Guid.Parse(inviteCode)) ?? throw new InvalidGameException();
 
-    if (game.UserIds.Contains(userId)) throw new UserAlreadyConnectedException(game);
+    if (game.UserIds.Contains(Guid.Parse(userId))) throw new UserAlreadyConnectedException(game);
 
-    game.UserIds.Add(userId);
-    store.Games[gameId] = game;
-    await AddConnectionToGroup(gameId, userId);
+    game.UserIds.Add(Guid.Parse(userId));
+    store.Games[game.Id] = game;
+    user.GameId = game.Id;
+    await AddConnectionToGroup(game.Id, Guid.Parse(userId));
 
-    await DispatchHubEvent(gameId, Events.USER_JOIN, user);
-  }
-  public async Task Disconnect(Guid userId, Guid gameId)
+    await DispatchHubEvent(game.Id, Events.USER_JOIN, user);
+  });
+  public async Task Disconnect(Guid userId, Guid gameId) => await OnRecieveAction(Actions.DISCONNECT, async () =>
   {
     User user = store.Users[userId] ?? throw new InvalidUserException();
     Game game = store.Games[gameId] ?? throw new InvalidGameException();
@@ -31,7 +32,7 @@ public partial class KahootHub
     await RemoveConnectionFromGroup(gameId);
 
     await DispatchHubEvent(gameId, Events.USER_LEAVE, user);
-  }
+  });
   
   public override async Task OnDisconnectedAsync(Exception? exception)
   {

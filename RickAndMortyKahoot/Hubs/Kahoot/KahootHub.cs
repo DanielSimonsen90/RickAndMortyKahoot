@@ -2,6 +2,7 @@
 using RickAndMortyKahoot.Models.Exceptions;
 using RickAndMortyKahoot.Services.Question;
 using RickAndMortyKahoot.Stores;
+using System.Text.Json;
 namespace RickAndMortyKahoot.Hubs.Kahoot;
 
 public partial class KahootHub(
@@ -27,6 +28,12 @@ public partial class KahootHub(
   }
   private async Task DispatchError(string actionName, Exception ex)
   {
-    await Clients.Client(Context.ConnectionId).SendCoreAsync(Events.ERROR, [actionName, ex]);
+    await Clients.Client(Context.ConnectionId).SendAsync(Events.ERROR, actionName, new 
+    { 
+      message = ex.Message, 
+      stack = ex.StackTrace,
+      inner = ex.InnerException,
+      name = ex.GetType().Name,
+    });
   }
 }

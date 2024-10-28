@@ -1,31 +1,34 @@
 ﻿@using RickAndMortyKahoot.Controllers
+@using RickAndMortyKahoot.Models.Games
 @using RickAndMortyKahoot.Models.Users
 @using System.Text.Json
-@model User?
+@using RickAndMortyKahoot.ViewModels
+@model UserViewModel
 @{
-    ViewData["Title"] = "Home";
+  ViewData["Title"] = "Home";
 }
 
-<button onclick="openModal('create-user')">Register</button>
-@if (Model is null)
+@if (Model.User is null || Model.CurrentUserId is null)
 {
-  <partial name="_CreateUserForm" model="new UserPayload()" />
+  <button onclick="openModal('create-user')">Register</button>
+  <partial name="_CreateUserModal" model="new UserPayload()" />
 }
 else
 {
-  <input type="hidden" id="user-data" value="@(JsonSerializer.Serialize(Model))" />
-  <input type="hidden" id="displayname" value="@(Model.Username)" />
+  <input type="hidden" id="user-data" value="@(JsonSerializer.Serialize(Model.User, new JsonSerializerOptions()
+    {
+      PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    }))" 
+  />
 
-  <h1>Hi, @(Model.Username)!</h1>
+  <h1>Hi, @(Model.User.Username)!</h1>
   <div class="button-panel">
     <button id="join-game" type="button" class="primary">Join game</button>
     <p class="or">or</p>
     <button id="create-game" type="button" class="primary">Create game</button>
   </div>
 
-  <dialog id="join-game-modal">
-    <h1>You could join a game here</h1>
-  </dialog>
+  <partial name="_JoinGameModal" model="new JoinGamePayload(Model.CurrentUserId.Value)" />
 }
 
 @section scripts {
