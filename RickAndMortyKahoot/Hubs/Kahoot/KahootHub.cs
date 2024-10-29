@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using RickAndMortyKahoot.Services.Question;
+using RickAndMortyKahoot.Services.Score;
 using RickAndMortyKahoot.Stores;
 using System.Text.Json;
 namespace RickAndMortyKahoot.Hubs.Kahoot;
 
 public partial class KahootHub(
   ProjectStore store, 
-  QuestionService questionService) : Hub
+  QuestionService questionService,
+  ScoreService scoreService) : Hub
 {
   private async Task OnRecieveAction(string actionName, Func<Task> action)
   {

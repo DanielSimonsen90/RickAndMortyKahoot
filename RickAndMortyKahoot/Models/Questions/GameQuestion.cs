@@ -4,6 +4,6 @@ public class GameQuestion(string title, string answer, string[] choices) : Quest
 {
   public GameQuestion() : this(string.Empty, "answer", [string.Empty, string.Empty, string.Empty]) {}
 
-  public bool Available { get; set; }
+  public bool Available { get; set; } = true;
   public long Timestamp { get; set; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 }

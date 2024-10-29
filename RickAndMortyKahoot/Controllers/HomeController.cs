@@ -28,14 +28,5 @@ namespace RickAndMortyKahoot.Controllers
       store.TemporaryUser = user;
       return RedirectToAction(nameof(Index), new { userId = user.Id });
     }
-
-    [HttpGet("Game/{gameId}")]
-    public IActionResult Game(Guid gameId, Guid userId)
-    {
-      if (gameId == Guid.Empty) return BadRequest(nameof(gameId));
-      if (!store.Games.TryGetValue(gameId, out Game? game) || game is null) return BadRequest(nameof(game));
-
-      return View(new GameViewModel(userId, game));
-    }
   }
 }

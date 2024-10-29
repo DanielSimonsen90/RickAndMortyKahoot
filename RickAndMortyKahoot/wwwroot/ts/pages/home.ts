@@ -2,6 +2,7 @@
 
 import { User } from "../models/User.js";
 import KahootHub from "../KahootHub/index.js";
+import { LOCAL_STORAGE_KEYS } from "../constants.js";
 
 $('#create-game').on('click', () => {
   const json = $("#user-data").val();
@@ -30,7 +31,7 @@ $('#join-game-form').on('submit', (e) => {
 
 const userJson = $('#user-data').val();
 if (typeof userJson === 'string') {
-  localStorage.setItem('user', userJson);
+  sessionStorage.setItem(LOCAL_STORAGE_KEYS.USER, userJson);
   
   KahootHub.start();
 }

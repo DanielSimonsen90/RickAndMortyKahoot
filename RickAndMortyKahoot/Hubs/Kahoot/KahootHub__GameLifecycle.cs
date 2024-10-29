@@ -1,5 +1,6 @@
 ﻿using RickAndMortyKahoot.Models.Games;
 using RickAndMortyKahoot.Models.Exceptions;
+using RickAndMortyKahoot.Models.Users;
 
 namespace RickAndMortyKahoot.Hubs.Kahoot;
 
@@ -19,5 +20,15 @@ public partial class KahootHub
     
     AddConnectionToGroup(game.Id, userId);
     await DispatchHubEvent(game.Id, Events.GAME_CREATE, game);
+  });
+
+  public async Task StartGame(Guid gameId, Guid userId) => await OnRecieveAction(Actions.START_GAME, async () =>
+  {
+    if (!store.Users.TryGetValue(userId, out User? user)) throw new InvalidUserException();
+    if (!store.Games.TryGetValue(gameId, out Game? game)) throw new InvalidGameException();
+
+    game.IsActive = true;
+
+    await DispatchHubEvent(gameId, Events.GAME_START);
   });
 }

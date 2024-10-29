@@ -21,6 +21,7 @@ public class Game
   public Guid InviteCode = Guid.NewGuid();
 
   public List<GameQuestion> Questions { get; set; }
+  public GameQuestion? CurrentQuestion { get; set; } = null;
 
-  public bool IsActive { get; set; } = false;
+    public bool IsActive { get; set; } = false;
 }

@@ -11,6 +11,10 @@ public class ScoreService(QuestionService questionService)
   /// [<see cref="User.Id"/>, score]
   /// </summary>
   public Dictionary<Guid, int> Scores { get; set; } = [];
+  /// <summary>
+  /// [<see cref="User.Id"/>, score]
+  /// </summary>
+  public Dictionary<Guid, int> NewScores { get; set; } = [];
 
   public int CalculateScore(Game game, Answer answer, bool timedout)
   {

@@ -1,14 +1,18 @@
-const LOCAL_STORAGE_KEYS = {
-    USER: 'user',
-};
-export function getCurrentUser() {
-    const json = localStorage.getItem(LOCAL_STORAGE_KEYS.USER);
+import { LOCAL_STORAGE_KEYS } from "./constants.js";
+export function getFromSessionStorage(key) {
+    const json = sessionStorage.getItem(key);
     if (typeof json !== 'string')
         return null;
     return JSON.parse(json);
 }
+export function saveToSessionStorage(key, value) {
+    sessionStorage.setItem(key, JSON.stringify(value));
+}
+export function getCurrentUser() {
+    return getFromSessionStorage(LOCAL_STORAGE_KEYS.USER);
+}
 export function saveCurrentUser(user) {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.USER, JSON.stringify(user));
+    return saveToSessionStorage(LOCAL_STORAGE_KEYS.USER, user);
 }
 export function navigate(url) {
     if (!url.includes('?userId')) {
