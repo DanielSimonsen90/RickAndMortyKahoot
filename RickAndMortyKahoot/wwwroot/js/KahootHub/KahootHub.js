@@ -14,12 +14,12 @@ class KahootHub {
             // @ts-ignore
             this.on(eventName, handler);
         }
-        // @ts-ignore
-        this.on('Ping', console.log);
     }
     _connection;
     async start() {
-        return this._connection.start().catch(reason => {
+        return this._connection.start()
+            .then(() => console.log('KahootHub started'))
+            .catch(reason => {
             console.error('Failed to start KahootHub', reason);
             return Promise.reject(reason);
         });

@@ -20,18 +20,17 @@ class KahootHub {
       // @ts-ignore
       this.on(eventName, handler);
     }
-
-    // @ts-ignore
-    this.on('Ping', console.log);
   }
 
   private _connection: signalR.HubConnection;
 
   public async start() {
-    return this._connection.start().catch(reason => {
-      console.error('Failed to start KahootHub', reason);
-      return Promise.reject(reason);
-    })
+    return this._connection.start()
+      .then(() => console.log('KahootHub started'))
+      .catch(reason => {
+        console.error('Failed to start KahootHub', reason);
+        return Promise.reject(reason);
+      });
   }
   public stop() {
     return this._connection.stop();
@@ -44,7 +43,7 @@ class KahootHub {
     const broadcast = () => {
       logAction(actionName, args);
       this._connection.invoke(actionName, ...args);
-    }
+    };
 
     if (this._connection.state !== SignalR.HubConnectionState.Connected) {
       return this.start().then(broadcast);

@@ -22,8 +22,7 @@ public partial class KahootHub(
 
   private async Task DispatchHubEvent(Guid gameId, string eventName, params object[] args)
   {
-    await Clients.Group(gameId.ToString()).SendCoreAsync(eventName, args);
-    //await Clients.All.SendAsync(eventName, args);
+    await Clients.All.SendCoreAsync(eventName, args.Prepend(gameId).ToArray());
   }
   private async Task DispatchError(string actionName, Exception ex)
   {

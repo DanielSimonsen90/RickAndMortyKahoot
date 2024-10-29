@@ -17,7 +17,7 @@ public partial class KahootHub
     user.GameId = game.Id;
     store.Users[userId] = user;
     
-    await AddConnectionToGroup(game.Id, userId);
+    AddConnectionToGroup(game.Id, userId);
     await DispatchHubEvent(game.Id, Events.GAME_CREATE, game);
   });
 }

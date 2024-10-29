@@ -5,4 +5,8 @@ export type Guid = string;
 declare global {
   // @ts-ignore
   declare let SignalR: typeof signalR;
+  
+  interface Window {
+    KahootHub: typeof import('./KahootHub/KahootHub').default;
+  }
 }

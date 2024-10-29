@@ -1,9 +1,14 @@
 import { User } from "./models/User";
-
+const LOCAL_STORAGE_KEYS = {
+  USER: 'user',
+};
 export function getCurrentUser() {
-  const json = localStorage.getItem('user');
+  const json = localStorage.getItem(LOCAL_STORAGE_KEYS.USER);
   if (typeof json !== 'string') return null;
   return JSON.parse(json) as User;
+}
+export function saveCurrentUser(user: User) {
+  localStorage.setItem(LOCAL_STORAGE_KEYS.USER, JSON.stringify(user));
 }
 
 export function navigate(url: string) {

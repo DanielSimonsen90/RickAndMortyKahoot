@@ -32,7 +32,5 @@ const userJson = $('#user-data').val();
 if (typeof userJson === 'string') {
   localStorage.setItem('user', userJson);
   
-  KahootHub.start().then(() => {
-    console.log('KahootHub started');
-  });
+  KahootHub.start();
 }

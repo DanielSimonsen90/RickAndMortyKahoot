@@ -17,7 +17,7 @@ public partial class KahootHub
     game.UserIds.Add(Guid.Parse(userId));
     store.Games[game.Id] = game;
     user.GameId = game.Id;
-    await AddConnectionToGroup(game.Id, Guid.Parse(userId));
+    AddConnectionToGroup(game.Id, Guid.Parse(userId));
 
     await DispatchHubEvent(game.Id, Events.USER_JOIN, user);
   });
@@ -30,52 +30,19 @@ public partial class KahootHub
 
     game.UserIds.Remove(userId);
     store.Games[gameId] = game;
-    await RemoveConnectionFromGroup(gameId);
+    RemoveConnectionFromGroup(gameId);
 
     await DispatchHubEvent(gameId, Events.USER_LEAVE, user);
   });
-  public override async Task OnConnectedAsync()
+
+  private void AddConnectionToGroup(Guid gameId, Guid userId)
   {
-    // Check if the connection exists in the store
-    if (store.Connections.TryGetValue(Context.ConnectionId, out Guid userId)
-        && store.Users.TryGetValue(userId, out User? user))
-    {
-      // Try to find the game for this user
-      if (store.FindGameContainingUser(userId) is Game game)
-      {
-        game.UserIds.Add(userId);
-        store.Games[game.Id] = game;
-        await AddConnectionToGroup(game.Id, user.Id);
-        await DispatchHubEvent(game.Id, Events.USER_JOIN, user);
-      }
-    }
-
-    await base.OnConnectedAsync();
-  }
-
-  public override async Task OnDisconnectedAsync(Exception? exception)
-  {
-    if (store.Connections.TryGetValue(Context.ConnectionId, out Guid userId)
-      && store.FindGameContainingUser(userId) is Game game
-      && store.Users.TryGetValue(userId, out User? user))
-    {
-      game.UserIds.Remove(userId);
-      store.Games[game.Id] = game;
-      await RemoveConnectionFromGroup(game.Id);
-      await DispatchHubEvent(game.Id, Events.USER_LEAVE, user);
-    }
-
-    await base.OnDisconnectedAsync(exception);
-  }
-
-  private async Task AddConnectionToGroup(Guid gameId, Guid userId)
-  {
-    await Groups.AddToGroupAsync(Context.ConnectionId, gameId.ToString());
+    //await Groups.AddToGroupAsync(Context.ConnectionId, gameId.ToString());
     store.Connections.Add(Context.ConnectionId, userId);
   }
-  private async Task RemoveConnectionFromGroup(Guid gameId)
+  private void RemoveConnectionFromGroup(Guid gameId)
   {
-    await Groups.RemoveFromGroupAsync(Context.ConnectionId, gameId.ToString());
+    //await Groups.RemoveFromGroupAsync(Context.ConnectionId, gameId.ToString());
     store.Connections.Remove(Context.ConnectionId);
   }
 }

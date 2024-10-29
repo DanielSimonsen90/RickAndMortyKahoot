@@ -6,6 +6,7 @@
 @inject ProjectStore store
 
 <section class="game">
+  <input type="hidden" id="game-id" value="@(Model.Game.Id)"
   <header>
     @if (store.Users.TryGetValue(Model.Game.HostId, out User? host))
     {
@@ -38,5 +39,6 @@
 </section>
 
 @section scripts {
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
   <script src="~/js/pages/game.js" type="module"></script>
 }
