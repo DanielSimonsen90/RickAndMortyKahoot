@@ -5,6 +5,11 @@ namespace RickAndMortyKahoot.Services.Question;
 
 public partial class QuestionService
 {
+  /// <summary>
+  /// Define questions based on the characters data from RickAndMortyApi
+  /// </summary>
+  /// <param name="characters">Characters data from RickAndMortyApi</param>
+  /// <returns>List of questions based on the characters data</returns>
   private static List<QuestionModel> DefineCharacterQuestions(IEnumerable<Character> characters)
   {
     // How many characters

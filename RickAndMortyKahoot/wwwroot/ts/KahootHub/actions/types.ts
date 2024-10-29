@@ -1,6 +1,10 @@
 import { Answer } from "../../models/Answer";
 import { Guid } from "../../types";
 
+/**
+ * The KahootHubActions type is a union type that contains all the actions that can be invoked on the KahootHub SignalR hub.
+ * Each action is a tuple with arguments passed to the action.
+ */
 type KahootHubActions = {
   Connect: [userId: Guid, inviteCode: Guid];
   Disconnect: [userId: Guid, gameId: Guid];

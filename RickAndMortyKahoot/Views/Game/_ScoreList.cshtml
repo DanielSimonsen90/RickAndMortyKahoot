@@ -11,7 +11,7 @@
     {
       @if (!store.Users.TryGetValue(score.Key, out User? user) || user is null)
       {
-        <li class="user-score">
+        <li class="user-score" data-host="@(score.Key == Model.HostId)">
           <strong class="user-score__username">User-@(score.Key)</strong> <span class="user-score__value">@(score.Value)</span>
         </li>
       }

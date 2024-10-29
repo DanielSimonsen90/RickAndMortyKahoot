@@ -5,6 +5,10 @@ import { Score } from "../../../models/Score";
 import { User } from "../../../models/User";
 import { Guid } from "../../../types";
 
+/**
+ * The KahootHubEvents type is a union type that contains all the events that can be received from the KahootHub SignalR hub.
+ * Each event is a tuple with arguments passed to the event.
+ */
 type KahootHubEvents = {
   Error: [action: string, error: any];
 

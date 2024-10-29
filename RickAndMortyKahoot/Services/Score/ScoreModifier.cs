@@ -1,7 +1,8 @@
-﻿using RickAndMortyKahoot.Models.Questions;
+﻿namespace RickAndMortyKahoot.Services.Score;
 
-namespace RickAndMortyKahoot.Services.Score;
-
+/// <summary>
+/// Class that contains the constant score modifiers for answers
+/// </summary>
 public static class ScoreModifier
 {
   public const int CORRECT_ANSWER = 100;

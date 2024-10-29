@@ -1,29 +1,42 @@
 using Microsoft.AspNetCore.Mvc;
-using RickAndMortyKahoot.Models;
-using RickAndMortyKahoot.Models.Games;
 using RickAndMortyKahoot.Models.Users;
 using RickAndMortyKahoot.Stores;
 using RickAndMortyKahoot.ViewModels;
-using System.Text.Json;
 
-namespace RickAndMortyKahoot.Controllers
+namespace RickAndMortyKahoot.Controllers;
+/// <summary>
+/// Controller used to handle Home-related requests
+/// </summary>
+public class HomeController(ProjectStore store) : Controller
 {
-  public class HomeController(ProjectStore store) : Controller
+  /// <summary>
+  /// The home page of the application
+  /// </summary>
+  /// <param name="userId">Once user is logged in, they're redirected back to index page with userId</param>
+  /// <returns>The Index view from /Views/Home</returns>
+  public IActionResult Index(Guid? userId)
   {
-    public IActionResult Index(Guid? userId)
-    {
-      var vm = new UserViewModel(userId, store.TemporaryUser);
-      store.TemporaryUser = null;
-      return View(vm);
-    }
+    // Define the view model
+    var vm = new UserViewModel(userId, userId is null || !store.Users.TryGetValue(userId.Value, out User? user) ? null : user);
 
-    [HttpPost("RegisterUser")]
-    public IActionResult UserRegisterSubmit(UserPayload payload)
-    {
-      var user = new User(payload);
-      store.Users.Add(user.Id, user);
-      store.TemporaryUser = user;
-      return RedirectToAction(nameof(Index), new { userId = user.Id });
-    }
+    // Return Index view
+    return View(vm);
+  }
+
+  /// <summary>
+  /// Form submission for user registration
+  /// </summary>
+  /// <param name="payload">The payload from the form</param>
+  /// <returns>Redirect to <see cref="Index"/></returns>
+  [HttpPost("RegisterUser")]
+  public IActionResult UserRegisterSubmit(UserPayload payload)
+  {
+    // Define user from payload
+    var user = new User(payload);
+    // Add user to store
+    store.Users.Add(user.Id, user);
+
+    // Redirect to index page with userId
+    return RedirectToAction(nameof(Index), new { userId = user.Id });
   }
 }

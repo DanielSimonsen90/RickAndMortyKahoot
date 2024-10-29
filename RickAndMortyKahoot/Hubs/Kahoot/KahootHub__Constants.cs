@@ -2,6 +2,12 @@
 
 public partial class KahootHub
 {
+  /// <summary>
+  /// Constant actions for hub
+  /// </summary>
+  /// <remarks>
+  /// These actions should be used to call hub methods from client and must match the method names for actions
+  /// </remarks>
   private static class Actions
   {
     public const string CONNECT = "Connect";
@@ -15,6 +21,13 @@ public partial class KahootHub
     public const string SUBMIT_ANSWER = "SubmitAnswer";
     public const string END_ROUND = "EndRound";
   }
+
+  /// <summary>
+  /// Constant events for hub
+  /// </summary>
+  /// <remarks>
+  /// These events should be used to dispatch hub events from hub and must match the strings in client's implementation of the hub
+  /// </remarks>
   private static class Events
   {
     public const string ERROR = "Error";  

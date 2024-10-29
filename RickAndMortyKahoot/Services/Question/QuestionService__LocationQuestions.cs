@@ -4,6 +4,11 @@ namespace RickAndMortyKahoot.Services.Question;
 
 public partial class QuestionService
 {
+  /// <summary>
+  /// Defines questions based on the locations data from RickAndMortyApi
+  /// </summary>
+  /// <param name="locations">Locations data from RickAndMortyApi</param>
+  /// <returns>List of questions based on the locations data</returns>
   private static List<QuestionModel> DefineLocationQuestions(IEnumerable<Location> locations)
   {
     // How many locations

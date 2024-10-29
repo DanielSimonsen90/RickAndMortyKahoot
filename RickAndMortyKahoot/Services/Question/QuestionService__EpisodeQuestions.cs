@@ -5,6 +5,11 @@ namespace RickAndMortyKahoot.Services.Question;
 
 public partial class QuestionService
 {
+  /// <summary>
+  /// Defines questions based on the episodes data from RickAndMortyApi
+  /// </summary>
+  /// <param name="episodes">Episodes data from RickAndMortyApi</param>
+  /// <returns>List of questions based on the episodes data</returns>
   private static List<QuestionModel> DefineEpisodeQuestions(IEnumerable<Episode> episodes)
   {
     // How many episodes
