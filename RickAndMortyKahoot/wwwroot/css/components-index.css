@@ -1,0 +1,11 @@
+button, [type=butt], [type=submit] {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--background-tertiary);
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  cursor: pointer;
+}

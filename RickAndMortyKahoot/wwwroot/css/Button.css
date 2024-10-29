@@ -1,0 +1,71 @@
+button,
+[type=butt],
+[type=submit] {
+  --color: var(--background-secondary);
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  outline: none;
+  transition: filter 0.2s;
+}
+button:hover,
+[type=butt]:hover,
+[type=submit]:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 1rem 1px var(--background-tertiary);
+}
+button.primary,
+[type=butt].primary,
+[type=submit].primary {
+  background-color: var(--color);
+  border: 1px solid var(--background-tertiary);
+  color: var(--text-primary);
+}
+button.secondary,
+[type=butt].secondary,
+[type=submit].secondary {
+  background-color: transparent;
+  border: 1px solid var(--color);
+  color: var(--color);
+}
+button.secondary--light,
+[type=butt].secondary--light,
+[type=submit].secondary--light {
+  --color: var(--text-tertiary);
+}
+button.brand,
+[type=butt].brand,
+[type=submit].brand {
+  --color: var(--brand);
+}
+button.cancel,
+[type=butt].cancel,
+[type=submit].cancel {
+  --color: var(--text-primary);
+  background-color: transparent;
+  color: var(--color);
+  border: none;
+}
+button.cancel:hover,
+[type=butt].cancel:hover,
+[type=submit].cancel:hover {
+  box-shadow: none;
+  text-decoration: underline;
+}
+
+.button-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+.button-panel:has(.or) {
+  display: grid;
+}
+.button-panel:has(.or) .or {
+  margin: 0.25em;
+}

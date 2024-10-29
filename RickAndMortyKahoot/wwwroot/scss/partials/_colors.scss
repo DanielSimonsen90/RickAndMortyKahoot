@@ -1,0 +1,30 @@
+$background-primary: #222;
+$background-secondary: #333;
+$background-tertiary: #444;
+
+$text-primary: #eee;
+$text-secondary: #ddd;
+$text-tertiary: #ccc;
+$text-link: #206dc0;
+
+$brand: #875ada;
+$host: rgb(255, 235, 59);
+
+body {
+  --background-primary: #{$background-primary};
+  --background-secondary: #{$background-secondary};
+  --background-tertiary: #{$background-tertiary};
+
+  --text-primary: #{$text-primary};
+  --text-secondary: #{$text-secondary};
+  --text-tertiary: #{$text-tertiary};
+  --text-link: #{$text-link};
+
+  --brand: #{$brand};
+  --host: #{$host};
+}
+
+body {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+}

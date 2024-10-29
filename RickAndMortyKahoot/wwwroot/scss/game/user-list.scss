@@ -1,0 +1,10 @@
+.user-list {
+
+  li[data-host=True] {
+    color: var(--host);
+
+    &::before {
+      content: "👑";
+    }
+  }
+}

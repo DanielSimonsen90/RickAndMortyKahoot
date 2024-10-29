@@ -1,0 +1,10 @@
+dialog {
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+  border-color: var(--background-tertiary);
+  border-radius: 0.5em;
+}
+dialog form {
+  display: grid;
+  gap: 1ch;
+}
