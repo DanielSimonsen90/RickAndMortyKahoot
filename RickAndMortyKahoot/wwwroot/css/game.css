@@ -1,7 +1,8 @@
 .game {
   display: grid;
   align-items: center;
-  justify-content: center;
+  justify-items: center;
+  gap: 1em;
 }
 .game h1 {
   text-align: center;
@@ -20,4 +21,23 @@
   -webkit-user-select: text;
      -moz-user-select: text;
           user-select: text;
+}
+
+.users {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--background-tertiary);
+  padding: 1em;
+  border-radius: 0.25em;
+}
+.users h1 {
+  margin: 0;
+  margin-bottom: 0.5em;
+  text-align: center;
+}
+.users ul {
+  padding: 0;
+  margin: 0;
+  margin-left: 1em;
+  display: grid;
+  gap: 1ch;
 }

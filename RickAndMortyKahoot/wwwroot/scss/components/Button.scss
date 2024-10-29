@@ -15,9 +15,14 @@ button,
   outline: none;
   transition: filter .2s;
 
-  &:hover {
+  &:not(:disabled):hover {
     filter: brightness(1.1);
     box-shadow: 0 0 1rem 1px var(--background-tertiary);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: brightness(.8);
   }
 
   &.primary {

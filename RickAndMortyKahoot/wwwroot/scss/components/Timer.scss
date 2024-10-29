@@ -1,0 +1,50 @@
+#timer {
+  --color: var(--brand);
+  background-color: var(--color);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 3px;
+  height: 100%;
+  width: 0%;
+
+  &.active {
+    --duration: 0s;
+    animation: load var(--duration) linear forwards;
+  }
+
+  &.critical {
+    --color: var(--crud-danger);
+    animation:
+      load var(--duration) linear forwards,
+      blink 1s infinite;
+
+    &.reset {
+      animation-timeline: 0;
+    }
+  }
+}
+
+@keyframes load {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}

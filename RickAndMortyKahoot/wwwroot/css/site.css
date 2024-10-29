@@ -5,9 +5,12 @@ body {
   --text-primary: #eee;
   --text-secondary: #ddd;
   --text-tertiary: #ccc;
+  --text-muted: #888;
   --text-link: #206dc0;
   --brand: #875ada;
   --host: rgb(255, 235, 59);
+  --crud-success: #4caf50;
+  --crud-danger: #f44336;
 }
 
 body {
@@ -18,6 +21,7 @@ body {
 * {
   box-sizing: border-box;
   position: relative;
+  --border: 1px solid var(--background-tertiary);
 }
 
 html {
@@ -34,6 +38,8 @@ html {
 body {
   margin-bottom: 60px;
   min-height: calc(100vh - 60px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 main {

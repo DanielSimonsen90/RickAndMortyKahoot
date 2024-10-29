@@ -1,7 +1,7 @@
 /// <reference path="C:/Users/Ejer/AppData/Roaming/npm/node_modules/@types/jquery/index.d.ts" />
 import KahootHub from "../KahootHub/index.js";
 import { LOCAL_STORAGE_KEYS } from "../constants.js";
-$('#create-game').on('click', () => {
+$('#create-game').on('click', function () {
     const json = $("#user-data").val();
     if (!(typeof json === 'string'))
         return alert('Invalid JSON');
@@ -10,6 +10,10 @@ $('#create-game').on('click', () => {
     if (questionAmount !== undefined && !(typeof questionAmount === 'number'))
         return alert('Invalid question amount');
     KahootHub.broadcast('CreateGame', user.id, questionAmount ?? null);
+    if (this instanceof HTMLButtonElement) {
+        this.disabled = true;
+        this.innerHTML = "Creating your game...";
+    }
 });
 $('#join-game').on('click', () => {
     openModal("join-game-modal");

@@ -26,9 +26,11 @@ public partial class QuestionService(List<QuestionModel> questions)
     List<GameQuestion> availableQuestions = game.Questions
       .Where(q => q.Available)
       .ToList();
-    int index = new System.Random().Next(availableQuestions.Count);
+    int index = new Random().Next(availableQuestions.Count);
 
-    return availableQuestions[index];
+    GameQuestion question = availableQuestions[index];
+    question.Choices = [.. question.Choices.OrderBy(_ => new Random().Next(availableQuestions.Count))];
+    return question;
   }
   public bool IsCorrectAnswer(QuestionModel question, Answer answer) => question.AnswerIndex == answer.Index;
 
@@ -66,6 +68,7 @@ public partial class QuestionService(List<QuestionModel> questions)
         .Select(model => questionAroundProp(model)!.ToString()!)
         .Distinct()
         .Where(value => value != questionAroundProp(model)!.ToString())
+        .OrderRandomly()
         .Take(3)))
     .ToList();
 
@@ -120,6 +123,7 @@ public partial class QuestionService(List<QuestionModel> questions)
       title: question(model),
       answer: list(model).Count().ToString(),
       choices: new Random().GetChoicesAround(list(model).Count())))
+    .OrderRandomly()
     .Take(take)
     .ToList();
   #endregion

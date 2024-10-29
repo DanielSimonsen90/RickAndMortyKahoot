@@ -60,6 +60,6 @@ public partial class KahootHub
     game.Questions[index] = game.CurrentQuestion;
     store.Games[gameId] = game;
 
-    await DispatchHubEvent(gameId, Events.ROUND_END, correctAnswer, scores.ToArray());
+    await DispatchHubEvent(gameId, Events.ROUND_END, correctAnswer, scores.ToArray(), game.CurrentQuestion);
   });
 }
