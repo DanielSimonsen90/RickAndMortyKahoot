@@ -1,3 +1,4 @@
+import { Answer } from "../../../models/Answer";
 import { Game } from "../../../models/Game";
 import { GameQuestion } from "../../../models/GameQuestion";
 import { User } from "../../../models/User";
@@ -14,7 +15,7 @@ type KahootHubEvents = {
   GameEnd: [gameId: Guid];
 
   NewQuestion: [gameId: Guid, question: GameQuestion];
-  RoundEnd: [gameId: Guid, score: Array<{ key: Guid, value: number }>];
+  RoundEnd: [gameId: Guid, correctAnswer: Answer, score: Array<{ key: Guid, value: number }>, question: GameQuestion];
   AutoEndRound: [gameId: Guid, hostId: Guid];
 }
 

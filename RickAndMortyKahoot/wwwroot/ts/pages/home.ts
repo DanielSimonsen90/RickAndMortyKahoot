@@ -13,7 +13,10 @@ $('#create-game').on('click', function() {
   if (questionAmount !== undefined && !(typeof questionAmount === 'number')) return alert('Invalid question amount');
 
   KahootHub.broadcast('CreateGame', user.id, questionAmount ?? null);
-  if (this instanceof HTMLButtonElement) this.disabled = true;
+  if (this instanceof HTMLButtonElement) {
+    this.disabled = true;
+    this.innerHTML = "Creating your game...";
+  }
 });
 
 $('#join-game').on('click', () => {

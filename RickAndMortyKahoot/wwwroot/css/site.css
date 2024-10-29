@@ -5,9 +5,12 @@ body {
   --text-primary: #eee;
   --text-secondary: #ddd;
   --text-tertiary: #ccc;
+  --text-muted: #888;
   --text-link: #206dc0;
   --brand: #875ada;
   --host: rgb(255, 235, 59);
+  --crud-success: #4caf50;
+  --crud-danger: #f44336;
 }
 
 body {

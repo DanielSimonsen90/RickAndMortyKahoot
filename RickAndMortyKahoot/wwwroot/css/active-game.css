@@ -8,6 +8,16 @@ main > header {
   align-items: center;
   justify-items: center;
 }
+#current-question .question header {
+  display: grid;
+  grid-template-areas: "question progress" "answer answer";
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1ch;
+}
+#current-question .question header:not(:has(#round-active)) h1 {
+  color: var(--text-muted);
+}
 #current-question .choices {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -26,4 +36,32 @@ main > header {
 }
 #current-question .choices .choice.selected {
   border: 1px solid var(--text-primary);
+}
+#current-question .choices .choice.selected.correct {
+  --answer-color: var(--crud-success);
+}
+#current-question .choices .choice.correct {
+  text-decoration: underline;
+  background-color: var(--answer-color);
+}
+#current-question .choices .choice.correct:not(.selected) {
+  --answer-color: var(--crud-danger);
+}
+
+#correct-answer p {
+  font-size: 1.5rem;
+  text-align: center;
+}
+#correct-answer .correct-answer-value {
+  font-size: 1.65rem;
+}
+#correct-answer #score h2 {
+  margin: 0.5em 0;
+}
+
+#questions-progress::before {
+  content: "(";
+}
+#questions-progress::after {
+  content: ")";
 }

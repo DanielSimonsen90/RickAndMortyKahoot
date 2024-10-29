@@ -25,7 +25,7 @@ public class Question
   public Guid Id { get; set; } = Guid.NewGuid();
   public string Title { get; }
   public string Answer { get; }
-  public List<string> Choices { get; }
+  public List<string> Choices { get; internal set; }
 
   public int AnswerIndex
   {

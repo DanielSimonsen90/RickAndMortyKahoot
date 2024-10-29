@@ -8,6 +8,18 @@ main>header {
     display: grid;
     align-items: center;
     justify-items: center;
+
+    header {
+      display: grid;
+      grid-template-areas: "question progress" "answer answer";
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1ch;
+    }
+
+    header:not(:has(#round-active)) h1 {
+      color: var(--text-muted);
+    }
   }
 
   .choices {
@@ -30,6 +42,45 @@ main>header {
 
     .choice.selected {
       border: 1px solid var(--text-primary);
+
+      &.correct {
+        --answer-color: var(--crud-success);
+      }
     }
+
+    .choice.correct {
+      text-decoration: underline;
+      background-color: var(--answer-color);
+
+      &:not(.selected) {
+        --answer-color: var(--crud-danger);
+      }
+    }
+  }
+}
+
+#correct-answer {
+  p {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .correct-answer-value {
+    font-size: 1.65rem;
+  }
+
+  #score {
+    h2 {
+      margin: .5em 0;
+    }
+  }
+}
+
+#questions-progress {
+  &::before {
+    content: '(';
+  }
+  &::after {
+    content: ')';
   }
 }

@@ -12,9 +12,9 @@ button,
   outline: none;
   transition: filter 0.2s;
 }
-button:hover,
-[type=butt]:hover,
-[type=submit]:hover {
+button:not(:disabled):hover,
+[type=butt]:not(:disabled):hover,
+[type=submit]:not(:disabled):hover {
   filter: brightness(1.1);
   box-shadow: 0 0 1rem 1px var(--background-tertiary);
 }

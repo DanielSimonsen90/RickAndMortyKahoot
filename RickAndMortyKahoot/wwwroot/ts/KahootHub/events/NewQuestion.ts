@@ -10,6 +10,10 @@ export default CreateEvent('NewQuestion', (gameId, question) => {
 
   $.get(`${window.location.origin}/Game/QuestionView?gameId=${gameId}&questionId=${question.id}`, view => {
     $('#current-question').html(view);
+    if (question.title.includes("**")) {
+      // replace ** in .question h1 with <strong> tags in .question h1
+      $('.question h1').html(question.title.replace(/\*\*/g, '<strong>'));
+    }
 
     $('.choice').on('click', function () {
       const choices = this.closest('.choices')?.querySelectorAll('.choice')!;

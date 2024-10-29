@@ -26,9 +26,11 @@ public partial class QuestionService(List<QuestionModel> questions)
     List<GameQuestion> availableQuestions = game.Questions
       .Where(q => q.Available)
       .ToList();
-    int index = new System.Random().Next(availableQuestions.Count);
+    int index = new Random().Next(availableQuestions.Count);
 
-    return availableQuestions[index];
+    GameQuestion question = availableQuestions[index];
+    question.Choices = [.. question.Choices.OrderBy(_ => new Random().Next(availableQuestions.Count))];
+    return question;
   }
   public bool IsCorrectAnswer(QuestionModel question, Answer answer) => question.AnswerIndex == answer.Index;
 

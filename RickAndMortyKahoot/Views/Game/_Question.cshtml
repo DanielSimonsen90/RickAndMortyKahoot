@@ -1,0 +1,23 @@
+﻿@using RickAndMortyKahoot.Models.Questions
+@using RickAndMortyKahoot.ViewModels
+@model QuestionViewModel
+
+<section class="question">
+  <header>
+    <h1>@Model.Question.Title</h1>
+    <p id="questions-progress">@(Model.QuestionsAnswered)/@(Model.QuestionsTotal)</p>
+    <div id="correct-answer">
+      <div id="round-active"></div>
+    </div>
+  </header>
+  <ul class="choices">
+    @for (int i = 0; i < Model.Question.Choices.Count; i++)
+    {
+      <li id="Choices[@(i)]">
+        <button id="@(i)" class="choice primary">
+          @Model.Question.Choices[i]
+        </button>
+      </li>
+    }
+  </ul>
+</section>
