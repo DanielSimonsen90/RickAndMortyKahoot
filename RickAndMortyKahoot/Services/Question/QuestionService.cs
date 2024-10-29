@@ -68,6 +68,7 @@ public partial class QuestionService(List<QuestionModel> questions)
         .Select(model => questionAroundProp(model)!.ToString()!)
         .Distinct()
         .Where(value => value != questionAroundProp(model)!.ToString())
+        .OrderRandomly()
         .Take(3)))
     .ToList();
 
@@ -122,6 +123,7 @@ public partial class QuestionService(List<QuestionModel> questions)
       title: question(model),
       answer: list(model).Count().ToString(),
       choices: new Random().GetChoicesAround(list(model).Count())))
+    .OrderRandomly()
     .Take(take)
     .ToList();
   #endregion

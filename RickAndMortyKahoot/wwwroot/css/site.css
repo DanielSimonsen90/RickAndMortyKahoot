@@ -21,6 +21,7 @@ body {
 * {
   box-sizing: border-box;
   position: relative;
+  --border: 1px solid var(--background-tertiary);
 }
 
 html {
@@ -37,6 +38,8 @@ html {
 body {
   margin-bottom: 60px;
   min-height: calc(100vh - 60px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 main {

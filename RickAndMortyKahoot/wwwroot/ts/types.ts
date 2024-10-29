@@ -9,5 +9,6 @@ declare global {
   interface Window {
     KahootHub: typeof import('./KahootHub/KahootHub').default;
     roundTimeout: number;
+    stopTimer: () => void;
   }
 }

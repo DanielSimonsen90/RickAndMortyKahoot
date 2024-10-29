@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_KEYS } from "./constants.js";
+import { CRITICAL_TIMEOUT_SECONDS, LOCAL_STORAGE_KEYS } from "./constants.js";
 export function getFromSessionStorage(key) {
     const json = sessionStorage.getItem(key);
     if (typeof json !== 'string')
@@ -22,4 +22,31 @@ export function navigate(url) {
     }
     console.log(`Navigating to ${url}`);
     window.location.href = url;
+}
+export function timer({ timeoutSeconds, callback, showCritical, reset }) {
+    const timer = $('#timer');
+    if (!timer)
+        throw new Error('Timer element not found');
+    timer.addClass('active');
+    timer.css('--duration', `${timeoutSeconds}s`);
+    if (reset)
+        timer.addClass('reset');
+    const timeouts = {
+        main: setTimeout(() => {
+            window.stopTimer();
+        }, timeoutSeconds * 1000),
+        critical: showCritical ? setTimeout(() => {
+            timer.addClass('critical');
+            setTimeout(() => timer.removeClass('critical'), CRITICAL_TIMEOUT_SECONDS * 1000);
+        }, (timeoutSeconds - CRITICAL_TIMEOUT_SECONDS) * 1000) : null,
+    };
+    window.stopTimer = () => {
+        timer.css('--duration', '0s');
+        timer.removeClass('active');
+        timer.removeClass('reset');
+        callback?.();
+        clearTimeout(timeouts.main);
+        if (timeouts.critical)
+            clearTimeout(timeouts.critical);
+    };
 }

@@ -1,5 +1,5 @@
 import { ANSWER_TIMEOUT_SECONDS } from "../../constants.js";
-import { getCurrentUser, getFromSessionStorage } from "../../utils.js";
+import { timer, getCurrentUser, getFromSessionStorage } from "../../utils.js";
 import CreateEvent from "./_Construction/CreateEvent.js";
 export default CreateEvent('NewQuestion', (gameId, question) => {
     const currentUser = getCurrentUser();
@@ -11,7 +11,11 @@ export default CreateEvent('NewQuestion', (gameId, question) => {
         $('#current-question').html(view);
         if (question.title.includes("**")) {
             // replace ** in .question h1 with <strong> tags in .question h1
-            $('.question h1').html(question.title.replace(/\*\*/g, '<strong>'));
+            let started = false;
+            $('.question h1').html(question.title.replace(/\*\*/g, match => {
+                started = !started;
+                return started ? "<strong>" : "</strong>";
+            }));
         }
         $('.choice').on('click', function () {
             const choices = this.closest('.choices')?.querySelectorAll('.choice');
@@ -26,9 +30,13 @@ export default CreateEvent('NewQuestion', (gameId, question) => {
             window.KahootHub.broadcast('SubmitAnswer', gameId, answer);
         });
         const isHost = getFromSessionStorage('isHost');
-        if (isHost)
-            window.roundTimeout = setTimeout(() => {
-                window.KahootHub.broadcast('EndRound', gameId, currentUser.id);
-            }, ANSWER_TIMEOUT_SECONDS * 1000);
+        timer({
+            timeoutSeconds: ANSWER_TIMEOUT_SECONDS,
+            showCritical: true,
+            callback: () => {
+                if (isHost)
+                    window.KahootHub.broadcast('EndRound', gameId, currentUser.id);
+            },
+        });
     });
 });
