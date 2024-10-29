@@ -4,6 +4,7 @@
 
 <dialog id="create-user">
   <h1>Hello there! Let's set you up!</h1>
+  <p>Don't worry, we I won't be saving your details in a database.</p>
   <form asp-action="@(nameof(HomeController.UserRegisterSubmit))" method="post">
     <div class="input-group">
       <label asp-for="Username">Username</label>

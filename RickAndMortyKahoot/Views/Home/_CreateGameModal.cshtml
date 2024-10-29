@@ -1,0 +1,18 @@
+﻿@using RickAndMortyKahoot.Controllers
+@using RickAndMortyKahoot.Models.Games
+@using RickAndMortyKahoot.Models.Users
+@model CreateGamePayload
+
+<dialog id="create-game-modal">
+  <h1>Let's create a game!</h1>
+  <form id="create-game-form">
+    <div class="input-group">
+      <label asp-for="AmountOfQuestions">Amount of questions</label>
+      <input asp-for="AmountOfQuestions" placeholder="Enter amount of questions..." id="question-amount" max="@(Model.MaxAmountOfQuestions)" />
+    </div>
+    <div class="button-panel">
+      <button type="button" class="cancel" onclick="closeModal('create-game-modal')">Cancel</button>
+      <button type="submit" class="primary brand">Create game</button>
+    </div>
+  </form>
+</dialog>

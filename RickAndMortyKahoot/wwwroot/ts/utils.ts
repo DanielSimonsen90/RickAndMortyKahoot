@@ -33,17 +33,16 @@ export function navigate(url: string) {
 }
 
 type TimerOptions = {
+  selector: string;
   timeoutSeconds: number;
   callback?: () => void;
   showCritical?: boolean;
-  reset?: boolean;
 }
-export function timer({ timeoutSeconds, callback, showCritical, reset }: TimerOptions) {
-  const timer = $('#timer');
+export function timer({ timeoutSeconds, callback, showCritical, selector }: TimerOptions) {
+  const timer = $(selector);
   if (!timer) throw new Error('Timer element not found');
   timer.addClass('active');
   timer.css('--duration', `${timeoutSeconds}s`);
-  if (reset) timer.addClass('reset');
 
   const timeouts = {
     main: setTimeout(() => {
@@ -59,7 +58,6 @@ export function timer({ timeoutSeconds, callback, showCritical, reset }: TimerOp
   window.stopTimer = () => {
     timer.css('--duration', '0s');
     timer.removeClass('active');
-    timer.removeClass('reset');
     callback?.();
     
     clearTimeout(timeouts.main);

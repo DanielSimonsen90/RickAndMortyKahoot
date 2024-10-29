@@ -23,14 +23,12 @@ export function navigate(url) {
     console.log(`Navigating to ${url}`);
     window.location.href = url;
 }
-export function timer({ timeoutSeconds, callback, showCritical, reset }) {
-    const timer = $('#timer');
+export function timer({ timeoutSeconds, callback, showCritical, selector }) {
+    const timer = $(selector);
     if (!timer)
         throw new Error('Timer element not found');
     timer.addClass('active');
     timer.css('--duration', `${timeoutSeconds}s`);
-    if (reset)
-        timer.addClass('reset');
     const timeouts = {
         main: setTimeout(() => {
             window.stopTimer();
@@ -43,7 +41,6 @@ export function timer({ timeoutSeconds, callback, showCritical, reset }) {
     window.stopTimer = () => {
         timer.css('--duration', '0s');
         timer.removeClass('active');
-        timer.removeClass('reset');
         callback?.();
         clearTimeout(timeouts.main);
         if (timeouts.critical)

@@ -14,15 +14,18 @@
     {
       <h1>@(host.Username)'s "kahoot" game</h1>
     }
-    <div id="timer">
-      <div id="timer__inner"></div>
-    </div>
+    <div id="round-timer" class="timer"></div>
+    <div id="round-timer-end" class="timer"></div>
   </header>
   <div id="current-question"></div>
 </main>
 <aside>
   <partial name="_UserList" model="new UserListViewModel(Model.Game.UserIds, Model.Game.HostId)" />
 </aside>
+@if (Model.CurrentUserId == Model.Game.HostId)
+{
+  <button type="button" class="danger secondary" id="end-game">End game</button>
+}
 
 @section styles {
   <link rel="stylesheet" href="~/css/game.css" />

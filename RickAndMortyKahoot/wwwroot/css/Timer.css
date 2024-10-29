@@ -1,4 +1,4 @@
-#timer {
+.timer {
   --color: var(--brand);
   background-color: var(--color);
   display: flex;
@@ -8,15 +8,15 @@
   height: 100%;
   width: 0%;
 }
-#timer.active {
+.timer.active {
   --duration: 0s;
   animation: load var(--duration) linear forwards;
 }
-#timer.critical {
+.timer.critical {
   --color: var(--crud-danger);
   animation: load var(--duration) linear forwards, blink 1s infinite;
 }
-#timer.critical.reset {
+.timer.critical.reset {
   animation-timeline: 0;
 }
 

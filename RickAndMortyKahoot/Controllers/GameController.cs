@@ -2,22 +2,24 @@
 using RickAndMortyKahoot.Models.Games;
 using RickAndMortyKahoot.Models.Questions;
 using RickAndMortyKahoot.Models.Users;
+using RickAndMortyKahoot.Services.Score;
 using RickAndMortyKahoot.Stores;
 using RickAndMortyKahoot.ViewModels;
-using System.Text.Json;
 
 namespace RickAndMortyKahoot.Controllers;
 
 [Route("Game")]
-public class GameController(ProjectStore store) : Controller
+public class GameController(
+  ProjectStore store,
+  ScoreService scoreService) : Controller
 {
   [HttpGet("{gameId}")]
-  public IActionResult Game(Guid gameId, Guid userId)
+  public IActionResult Game(Guid gameId, Guid userId, bool showScore = false)
   {
     if (gameId == Guid.Empty) return BadRequest(nameof(gameId));
     if (!store.Games.TryGetValue(gameId, out Game? game) || game is null) return BadRequest(nameof(game));
 
-    return View(new GameViewModel(userId, game));
+    return View(new GameViewModel(userId, game, null, scoreService.GetHighscores(game)));
   }
 
   [HttpGet("{gameId}/active")]
@@ -34,7 +36,7 @@ public class GameController(ProjectStore store) : Controller
     GameQuestion? question = game.Questions.Find(q => q.Id == questionId);
     if (question is null) return NotFound();
 
-    var vm = new QuestionViewModel(question, game.Questions.Where(q => !q.Available).Count(), game.Questions.Count());
+    var vm = new QuestionViewModel(question, game.Questions.Where(q => !q.Available).Count() + 1, game.Questions.Count);
 
     return PartialView("_Question", vm);
   }

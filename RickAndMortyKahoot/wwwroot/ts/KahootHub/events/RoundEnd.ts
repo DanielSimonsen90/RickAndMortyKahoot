@@ -23,7 +23,7 @@ export default CreateEvent('RoundEnd', (gameId, answer, score, question) => {
 
     timer({
       timeoutSeconds: ROUND_END_TIMEOUT_SECONDS,
-      reset: true,
+      selector: '#round-timer-end',
       callback: () => {
         if (isHost) window.KahootHub.broadcast('NextQuestion', gameId, currentUser.id);
       },

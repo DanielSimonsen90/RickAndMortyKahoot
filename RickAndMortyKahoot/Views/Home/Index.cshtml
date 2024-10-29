@@ -2,8 +2,10 @@
 @using RickAndMortyKahoot.Models.Games
 @using RickAndMortyKahoot.Models.Users
 @using System.Text.Json
+@using RickAndMortyKahoot.Services.Question
 @using RickAndMortyKahoot.ViewModels
 @model UserViewModel
+@inject QuestionService questionService
 @{
   ViewData["Title"] = "Home";
 }
@@ -24,11 +26,12 @@ else
 
   <h1>Hi, @(Model.User.Username)!</h1>
   <div class="button-panel">
-    <button id="join-game" type="button" class="primary">Join game</button>
+    <button id="join-game" type="button" class="primary" onclick="openModal('join-game-modal')'">Join game</button>
     <p class="or">or</p>
-    <button id="create-game" type="button" class="primary">Create game</button>
+    <button type="button" class="primary" onclick="openModal('create-game-modal')">Create game</button>
   </div>
 
+  <partial name="_CreateGameModal" model="new CreateGamePayload(Model.CurrentUserId.Value, questionService.Questions.Count)" />
   <partial name="_JoinGameModal" model="new JoinGamePayload(Model.CurrentUserId.Value)" />
 }
 

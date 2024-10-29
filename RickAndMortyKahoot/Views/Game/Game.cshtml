@@ -17,8 +17,19 @@
       <h1>Someone's "kahoot" game</h1>
     }
     <p class="game-code">InviteCode: <span class="game-code__inner">@(Model.Game.InviteCode)</span></p>
+    <p>Questions in this game: @(Model.Game.Questions.Count)</p>
   </header>
-  <partial name="_UserList" model="new UserListViewModel(Model.Game.UserIds, Model.Game.HostId)" />
+  @if (Model.Score.Count == 0)
+  {
+    <partial name="_UserList" model="new UserListViewModel(Model.Game.UserIds, Model.Game.HostId)" />
+  }
+  else
+  {
+    <div class="game-over">
+      <h2>Game over!</h2>
+      <partial name="_ScoreList" model="new ScoreListViewModel(Model.Score.ToArray(), true)" />
+    </div>
+  }
 
   <div class="button-panel">
     @if (Model.CurrentUserId == Model.Game.HostId)

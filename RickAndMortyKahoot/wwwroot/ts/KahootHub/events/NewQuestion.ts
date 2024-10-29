@@ -37,6 +37,7 @@ export default CreateEvent('NewQuestion', (gameId, question) => {
     
     const isHost = getFromSessionStorage('isHost');
     timer({
+      selector: '#round-timer',
       timeoutSeconds: ANSWER_TIMEOUT_SECONDS,
       showCritical: true,
       callback: () => {
