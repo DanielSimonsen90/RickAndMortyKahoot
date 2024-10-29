@@ -1,6 +1,7 @@
 /// <reference path="C:/Users/Ejer/AppData/Roaming/npm/node_modules/@types/jquery/index.d.ts" />
 import KahootHub from "../KahootHub/index.js";
 import { LOCAL_STORAGE_KEYS } from "../constants.js";
+import { saveToSessionStorage } from "../utils.js";
 $('#create-game-form').on('submit', function (e) {
     e.preventDefault();
     e.stopImmediatePropagation();
@@ -31,3 +32,5 @@ if (typeof userJson === 'string') {
     sessionStorage.setItem(LOCAL_STORAGE_KEYS.USER, userJson);
     KahootHub.start();
 }
+saveToSessionStorage('user', undefined);
+saveToSessionStorage('isHost', undefined);

@@ -11,7 +11,8 @@ export function getFromSessionStorage<K extends keyof SessionStorageMap>(key: K)
   if (typeof json !== 'string') return null;
   return JSON.parse(json) as SessionStorageMap[K];
 }
-export function saveToSessionStorage<K extends keyof SessionStorageMap>(key: K, value: SessionStorageMap[K]) {
+export function saveToSessionStorage<K extends keyof SessionStorageMap>(key: K, value: SessionStorageMap[K] | undefined) {
+  if (value === undefined) return sessionStorage.removeItem(key);
   sessionStorage.setItem(key, JSON.stringify(value));
 }
 

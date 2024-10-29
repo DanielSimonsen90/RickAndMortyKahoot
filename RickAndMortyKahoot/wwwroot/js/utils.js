@@ -6,6 +6,8 @@ export function getFromSessionStorage(key) {
     return JSON.parse(json);
 }
 export function saveToSessionStorage(key, value) {
+    if (value === undefined)
+        return sessionStorage.removeItem(key);
     sessionStorage.setItem(key, JSON.stringify(value));
 }
 export function getCurrentUser() {
