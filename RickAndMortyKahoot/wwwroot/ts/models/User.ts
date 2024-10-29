@@ -1,4 +1,4 @@
-import { Guid } from "../types";
+import { Guid } from "../types.js";
 
 export type User = {
   id: Guid;

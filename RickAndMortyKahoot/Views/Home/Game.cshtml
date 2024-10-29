@@ -23,19 +23,26 @@
     {
       @if (store.Users.TryGetValue(userId, out User? user))
       {
-        <li>@(user?.Username)</li>
+        <li id="@(user.Id)">@(user?.Username)</li>
       }
       else
       {
-        <li>Player-@(userId)</li>
+        <li id="@(userId)">Player-@(userId)</li>
       }
     }
   </ul>
 
-  @if (Model.CurrentUserId == Model.Game.HostId)
-  {
-    <button id="start-game" type="button">Start game</button>
-  }
+  <div class="button-panel">
+    @if (Model.CurrentUserId == Model.Game.HostId)
+    {
+      <button id="leave-and-end-game" type="button">Leave and end game</button>
+      <button id="start-game" type="button">Start game</button>
+    }
+    else
+    {
+      <button id="leave-game" type="button">Leave game</button>
+    }
+  </div>
 </section>
 
 @section scripts {

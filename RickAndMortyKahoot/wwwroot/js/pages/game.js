@@ -6,7 +6,14 @@ const gameId = $("#game-id").val();
 if (user && typeof gameId === 'string') {
     user.gameId = gameId;
     saveCurrentUser(user);
+    $("#start-game").on('click', () => {
+        KahootHub.broadcast('StartGame', gameId);
+    });
+    $("#leave-game").on('click', () => {
+        KahootHub.broadcast('Disconnect', user.id, gameId);
+    });
+    $("#leave-and-end-game").on('click', () => {
+        KahootHub.broadcast('EndGame', gameId);
+        KahootHub.broadcast('Disconnect', user.id, gameId);
+    });
 }
-$("#start-game").on('click', () => {
-    alert('Start game will be implemented soon');
-});

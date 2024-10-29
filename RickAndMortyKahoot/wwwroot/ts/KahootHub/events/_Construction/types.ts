@@ -9,6 +9,8 @@ type KahootHubEvents = {
   UserLeave: [gameId: Guid, user: User]
 
   GameCreate: [gameId: Guid, game: Game];
+  GameStart: [gameId: Guid];
+  GameEnd: [gameId: Guid];
 }
 
 export default KahootHubEvents;
