@@ -10,7 +10,8 @@
 
 @if (Model.User is null || Model.CurrentUserId is null)
 {
-  <button onclick="openModal('create-user')">Register</button>
+  <h1>You are not connected to a user.</h1>
+  <button type="button" class="brand primary" onclick="openModal('create-user')">Register</button>
   <partial name="_CreateUserModal" model="new UserPayload()" />
 }
 else
@@ -29,6 +30,10 @@ else
   </div>
 
   <partial name="_JoinGameModal" model="new JoinGamePayload(Model.CurrentUserId.Value)" />
+}
+
+@section styles {
+  <link rel="stylesheet" href="~/css/Form.css" />
 }
 
 @section scripts {

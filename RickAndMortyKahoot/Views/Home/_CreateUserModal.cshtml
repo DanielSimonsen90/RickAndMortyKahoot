@@ -7,7 +7,7 @@
   <form asp-action="@(nameof(HomeController.UserRegisterSubmit))" method="post">
     <div class="input-group">
       <label asp-for="Username">Username</label>
-      <input asp-for="Username" required />
+      <input asp-for="Username" required placeholder="Enter your username..." />
     </div>
     <div class="button-panel">
       <button type="button" class="cancel" onclick="closeModal('create-user')">Cancel</button>

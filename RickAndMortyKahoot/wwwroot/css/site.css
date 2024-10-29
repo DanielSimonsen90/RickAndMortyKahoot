@@ -1,22 +1,55 @@
+body {
+  --background-primary: #222;
+  --background-secondary: #333;
+  --background-tertiary: #444;
+  --text-primary: #eee;
+  --text-secondary: #ddd;
+  --text-tertiary: #ccc;
+  --text-link: #206dc0;
+  --brand: #875ada;
+  --host: rgb(255, 235, 59);
+}
+
+body {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+}
+
+* {
+  box-sizing: border-box;
+  position: relative;
+}
+
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
+  font-size: 16px;
   position: relative;
   min-height: 100%;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 18px;
+  }
 }
 
 body {
   margin-bottom: 60px;
+  min-height: calc(100vh - 60px);
+}
+
+main {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.or {
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+}
+.or::before, .or::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--background-tertiary);
+  width: 3ch;
 }

@@ -1,0 +1,24 @@
+.game {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    text-align: center;
+  }
+
+  .game-code {
+    user-select: none;    
+
+    &__inner {
+      background-color: var(--background-secondary);
+      border: 1px solid var(--background-tertiary);
+      border-radius: .25em;
+      
+      padding: .5em;
+      margin-left: .5ch;
+
+      user-select: text;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+form {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-group {
+  display: grid;
+  align-items: center;
+  gap: 1ch;
+}
+.input-group label {
+  font-weight: bold;
+}

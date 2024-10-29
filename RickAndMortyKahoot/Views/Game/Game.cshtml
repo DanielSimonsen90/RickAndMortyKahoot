@@ -16,34 +16,27 @@
     {
       <h1>Someone's "kahoot" game</h1>
     }
-    <p>Game code: <span>@(Model.Game.InviteCode)</span></p>
+    <p class="game-code">InviteCode: <span class="game-code__inner">@(Model.Game.InviteCode)</span></p>
   </header>
-  <ul class="user-list">
-    @foreach (Guid userId in Model.Game.UserIds)
-    {
-      @if (store.Users.TryGetValue(userId, out User? user))
-      {
-        <li id="@(user.Id)">@(user?.Username)</li>
-      }
-      else
-      {
-        <li id="@(userId)">Player-@(userId)</li>
-      }
-    }
-  </ul>
+  <partial name="_UserList" model="new UserListViewModel(Model.Game.UserIds, Model.Game.HostId)" />
 
   <div class="button-panel">
     @if (Model.CurrentUserId == Model.Game.HostId)
     {
-      <button id="leave-and-end-game" type="button">Leave and end game</button>
-      <button id="start-game" type="button">Start game</button>
+      <button id="leave-and-end-game" type="button" class="secondary secondary--light">Leave and end game</button>
+      <button id="start-game" type="button" class="primary">Start game</button>
     }
     else
     {
-      <button id="leave-game" type="button">Leave game</button>
+      <button id="leave-game" type="button" class="secondary secondary--light">Leave game</button>
     }
   </div>
 </section>
+
+@section styles {
+  <link rel="stylesheet" href="~/css/game.css" />
+  <link rel="stylesheet" href="~/css/user-list.css" />
+}
 
 @section scripts {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>

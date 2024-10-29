@@ -1,0 +1,21 @@
+﻿@using RickAndMortyKahoot.Models.Users
+@using RickAndMortyKahoot.Stores
+@using RickAndMortyKahoot.ViewModels
+
+@* UserIds *@
+@model UserListViewModel
+@inject ProjectStore store
+
+<ul class="user-list">
+  @foreach (Guid userId in Model.UserIds)
+  {
+    @if (store.Users.TryGetValue(userId, out User? user))
+    {
+      <li id="@(user.Id)" data-host="@(userId == Model.HostId)">@(user?.Username)</li>
+    }
+    else
+    {
+      <li id="@(userId)">Player-@(userId)</li>
+    }
+  }
+</ul>

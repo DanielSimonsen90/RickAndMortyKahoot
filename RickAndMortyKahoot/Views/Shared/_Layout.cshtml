@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>@ViewData["Title"] - RickAndMortyKahoot</title>
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-  <link rel="stylesheet" href="~/RickAndMortyKahoot.styles.css" asp-append-version="true" />
-
+  <link rel="stylesheet" href="~/css/Button.css" />
+  <link rel="stylesheet" href="~/css/Link.css" />
+  <link rel="stylesheet" href="~/css/Dialog.css" />
+  @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
   <header>
