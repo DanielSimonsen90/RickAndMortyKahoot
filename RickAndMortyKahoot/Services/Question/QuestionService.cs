@@ -1,4 +1,4 @@
-﻿using RickAndMortyKahoot.Models.Games;
+using RickAndMortyKahoot.Models.Games;
 using RickAndMortyKahoot.Models.Questions;
 using RickAndMortyKahoot.Services.RickAndMortyApi;
 using RickAndMortyKahoot.Extensions;
@@ -93,7 +93,7 @@ public partial class QuestionService(List<QuestionModel> questions)
 
     // In occasion, choices or answers return empty strings - filter those away
     return result
-      .Where(q => q.Choices.Any(choice => choice == string.Empty) || q.Answer == string.Empty)
+      .Where(q => q.Choices.All(choice => choice != string.Empty) || q.Answer != string.Empty)
       .ToList();
   }
 
