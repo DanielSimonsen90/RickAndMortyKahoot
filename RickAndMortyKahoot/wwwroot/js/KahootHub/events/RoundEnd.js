@@ -7,11 +7,10 @@ export default CreateEvent('RoundEnd', (gameId, score) => {
         return;
     console.log('RoundEnd', score);
     const isHost = getFromSessionStorage('isHost');
-    if (isHost)
-        var timeout = setTimeout(() => {
+    if (isHost) {
+        clearTimeout(window.roundTimeout);
+        setTimeout(() => {
             window.KahootHub.broadcast('NextQuestion', gameId, currentUser.id);
         }, ROUND_END_TIMEOUT_SECONDS * 1000);
-    window.KahootHub.on('NewQuestion', () => {
-        clearTimeout(timeout);
-    });
+    }
 });

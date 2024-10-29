@@ -18,6 +18,12 @@ button:hover,
   filter: brightness(1.1);
   box-shadow: 0 0 1rem 1px var(--background-tertiary);
 }
+button:disabled,
+[type=butt]:disabled,
+[type=submit]:disabled {
+  cursor: not-allowed;
+  filter: brightness(0.8);
+}
 button.primary,
 [type=butt].primary,
 [type=submit].primary {

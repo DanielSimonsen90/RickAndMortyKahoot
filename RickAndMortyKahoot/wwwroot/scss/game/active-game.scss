@@ -1,0 +1,35 @@
+main>header {
+  font-size: .6rem;
+  margin: 0;
+}
+
+#current-question {
+  .question {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .choices {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 5ch;
+    list-style: none;
+
+    li {
+      display: grid;
+      --size: 10ch;
+      min-height: var(--size);
+      min-width: var(--size);
+
+      * {
+        font-size: 2rem;
+      }
+    }
+
+    .choice.selected {
+      border: 1px solid var(--text-primary);
+    }
+  }
+}

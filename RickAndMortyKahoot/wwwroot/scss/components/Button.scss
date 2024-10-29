@@ -20,6 +20,11 @@ button,
     box-shadow: 0 0 1rem 1px var(--background-tertiary);
   }
 
+  &:disabled {
+    cursor: not-allowed;
+    filter: brightness(.8);
+  }
+
   &.primary {
     background-color: var(--color);
     border: 1px solid var(--background-tertiary);

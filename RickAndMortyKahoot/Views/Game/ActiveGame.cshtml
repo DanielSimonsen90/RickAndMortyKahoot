@@ -18,20 +18,14 @@
   <div id="current-question"></div>
 </main>
 <aside>
-  <ul class="user-list">
-    @foreach (Guid userId in Model.Game.UserIds)
-    {
-      if (!store.Users.TryGetValue(userId, out User? user) || user is null)
-      {
-        <li id="@(userId)">User-@(userId)</li>
-      }
-      else
-      {
-        <li id="@(user.Id)">@(user.Username)</li>
-      }
-    }
-  </ul>
+  <partial name="_UserList" model="new UserListViewModel(Model.Game.UserIds, Model.Game.HostId)" />
 </aside>
+
+@section styles {
+  <link rel="stylesheet" href="~/css/game.css" />
+  <link rel="stylesheet" href="~/css/user-list.css" />
+  <link rel="stylesheet" href="~/css/active-game.css" />
+}
 
 @section scripts {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>

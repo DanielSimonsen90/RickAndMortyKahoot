@@ -9,7 +9,10 @@ export default CreateEvent('NewQuestion', (gameId, question) => {
         return;
     $.get(`${window.location.origin}/Game/QuestionView?gameId=${gameId}&questionId=${question.id}`, view => {
         $('#current-question').html(view);
-        $('.choices li').on('click', function () {
+        $('.choice').on('click', function () {
+            const choices = this.closest('.choices')?.querySelectorAll('.choice');
+            choices.forEach(choice => choice.setAttribute('disabled', 'true'));
+            this.classList.add('selected');
             const index = +this.id;
             const answer = {
                 questionId: question.id,
@@ -20,7 +23,7 @@ export default CreateEvent('NewQuestion', (gameId, question) => {
         });
         const isHost = getFromSessionStorage('isHost');
         if (isHost)
-            setTimeout(() => {
+            window.roundTimeout = setTimeout(() => {
                 window.KahootHub.broadcast('EndRound', gameId, currentUser.id);
             }, ANSWER_TIMEOUT_SECONDS * 1000);
     });
