@@ -1,0 +1,51 @@
+﻿@using RickAndMortyKahoot.Models.Users
+@using RickAndMortyKahoot.Models.Games
+@using RickAndMortyKahoot.Stores
+@using RickAndMortyKahoot.ViewModels
+@model GameViewModel
+@inject ProjectStore store
+
+<section class="game">
+  <input type="hidden" id="game-id" value="@(Model.Game.Id)"
+  <header>
+    @if (store.Users.TryGetValue(Model.Game.HostId, out User? host))
+    {
+      <h1>@(host?.Username)'s "kahoot" game</h1>
+    }
+    else
+    {
+      <h1>Someone's "kahoot" game</h1>
+    }
+    <p>Game code: <span>@(Model.Game.InviteCode)</span></p>
+  </header>
+  <ul class="user-list">
+    @foreach (Guid userId in Model.Game.UserIds)
+    {
+      @if (store.Users.TryGetValue(userId, out User? user))
+      {
+        <li id="@(user.Id)">@(user?.Username)</li>
+      }
+      else
+      {
+        <li id="@(userId)">Player-@(userId)</li>
+      }
+    }
+  </ul>
+
+  <div class="button-panel">
+    @if (Model.CurrentUserId == Model.Game.HostId)
+    {
+      <button id="leave-and-end-game" type="button">Leave and end game</button>
+      <button id="start-game" type="button">Start game</button>
+    }
+    else
+    {
+      <button id="leave-game" type="button">Leave game</button>
+    }
+  </div>
+</section>
+
+@section scripts {
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+  <script src="~/js/pages/game.js" type="module"></script>
+}

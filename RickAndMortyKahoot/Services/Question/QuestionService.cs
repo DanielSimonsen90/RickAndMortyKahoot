@@ -1,4 +1,4 @@
-﻿using RickAndMortyKahoot.Models;
+﻿using RickAndMortyKahoot.Models.Games;
 using RickAndMortyKahoot.Models.Exceptions;
 using RickAndMortyKahoot.Models.Questions;
 using RickAndMortyKahoot.Services.RickAndMortyApi;
@@ -12,6 +12,13 @@ public partial class QuestionService(List<QuestionModel> questions)
 {
   public List<QuestionModel> Questions { get; set; } = questions;
   
+  public List<GameQuestion> GetGameQuestions(int? limit = null) => Questions
+    .Take(limit ?? Questions.Count)
+    .Select(question => new GameQuestion(
+      title: question.Title,
+      answer: question.Answer,
+      choices: [.. question.Choices]))
+    .ToList();
   public GameQuestion GetRandomGameQuestion(Game game)
   {
     if (game.Questions.All(q => !q.Available)) throw new AllQuestionsAnsweredException();
@@ -32,7 +39,11 @@ public partial class QuestionService(List<QuestionModel> questions)
   {
     var (characters, episodes, locations) = await kahootService.GetAllData();
 
-    return
+    var characterQs = DefineCharacterQuestions(characters);
+    var episodeQs= DefineEpisodeQuestions(episodes); 
+    var locationQs = DefineLocationQuestions(locations);
+
+    return 
     [
       .. DefineCharacterQuestions(characters),
       .. DefineEpisodeQuestions(episodes),
@@ -52,9 +63,10 @@ public partial class QuestionService(List<QuestionModel> questions)
       title: question(model),
       answer: questionAroundProp(model)!.ToString()!,
       choices: models
-        .Where(modelChoice => !modelChoice!.Equals(model))
-        .Take(3)
-        .Select(model => questionAroundProp(model)!.ToString()!)))
+        .Select(model => questionAroundProp(model)!.ToString()!)
+        .Distinct()
+        .Where(value => value != questionAroundProp(model)!.ToString())
+        .Take(3)))
     .ToList();
 
   private static List<QuestionModel> DefineQuestionsFromPropertyValues<TModel, TProperty>(
@@ -64,18 +76,22 @@ public partial class QuestionService(List<QuestionModel> questions)
     Func<TProperty, bool>? filter = null,
     int take = QUESTION_AMOUNT_PER_TYPE
   ) => models
-    .DistinctBy(questionAroundProp)
-    .Where(model => filter is null || filter(questionAroundProp(model)))
-    .Select((model, index, list) => new QuestionModel(
-      title: question(questionAroundProp(model), model),
-      answer: list.Count().ToString(),
-      choices: new Random()
-        .SelectRandomUniqueItems(list, 4)
-        .Where(propChoice => !propChoice!.Equals(questionAroundProp(model)))
-        .Take(3)
-        .Select(prop => prop!.ToString()!)))
-      .Take(take)
-      .ToList();
+    .GroupBy(questionAroundProp)
+    .Select(group => group
+      .Where(model => filter is null || filter(questionAroundProp(model)))
+      .Select((model, index, list) => new QuestionModel(
+        title: question(questionAroundProp(model), model),
+        answer: list.Count().ToString(),
+        choices: new Random()
+          .GetChoicesAround(list.Count())))
+      .Take(1))
+    .Aggregate(new List<QuestionModel>(), (acc, list) =>
+    {
+      acc.AddRange(list);
+      return acc;
+    })
+    .Take(take)
+    .ToList();
 
   private static QuestionModel DefineQuestionCountingPropertyValues<TModel, TProperty>(
     IEnumerable<TModel> models,
@@ -85,5 +101,26 @@ public partial class QuestionService(List<QuestionModel> questions)
     title: question,
     answer: models.Select(countDistinctProp).Distinct().Count().ToString(),
     choices: new Random().GetChoicesAround(models.Select(countDistinctProp).Distinct().Count()));
+  private static QuestionModel DefineQuestionCountingPropertyValues<TModel, TProperty>(
+    IEnumerable<TModel> models,
+    string question,
+    Func<TModel, bool> countFilter,
+    Func<TModel, TProperty> distincyBy
+  ) => new(
+    title: question,
+    answer: models.Where(countFilter).DistinctBy(distincyBy).Count().ToString(),
+    choices: new Random().GetChoicesAround(models.Where(countFilter).Distinct().Count()));
+  private static List<QuestionModel> DefineQuestionsByListCount<TModel, TProperty>(
+    IEnumerable<TModel> models,
+    Func<TModel, string> question,
+    Func<TModel, IEnumerable<TProperty>> list,
+    int take = QUESTION_AMOUNT_PER_TYPE
+  ) => models
+    .Select(model => new QuestionModel(
+      title: question(model),
+      answer: list(model).Count().ToString(),
+      choices: new Random().GetChoicesAround(list(model).Count())))
+    .Take(take)
+    .ToList();
   #endregion
 }

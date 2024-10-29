@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>.net8.0</TargetFramework>
+    <Version>0.2.0</Version>
+    <Authors>Bartosz Ziolkowski</Authors>
+    <PackageLicenseUrl>https://github.com/Carlj28/RickAndMorty.Net.Api/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Bartosz Ziolkowski</Copyright>
+    <PackageProjectUrl>https://github.com/Carlj28/RickAndMorty.Net.Api</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Carlj28/RickAndMorty.Net.Api</RepositoryUrl>
+    <PackageTags>RickAndMorty</PackageTags>
+    <Description>.NET client for Rick And Morty knowledge base api: https://rickandmortyapi.com/</Description>
+    <PackageIconUrl>https://image.ibb.co/dQCMoe/rickandmortyicon.png</PackageIconUrl>
+    <AssemblyName />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="8.1.1" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Ensure.That" Version="10.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>

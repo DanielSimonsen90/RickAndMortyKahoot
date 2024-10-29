@@ -1,0 +1,39 @@
+﻿@using RickAndMortyKahoot.Models.Users
+@using RickAndMortyKahoot.Stores
+@using RickAndMortyKahoot.ViewModels
+@model GameViewModel
+@inject ProjectStore store
+
+<main>
+  <header>
+    @if (!store.Users.TryGetValue(Model.Game.HostId, out User? host) || host is null)
+    {
+      <h1>Someone's "kahoot" game</h1>
+    }
+    else
+    {
+      <h1>@(host.Username)'s "kahoot" game</h1>
+    }
+  </header>
+  <div id="current-question"></div>
+</main>
+<aside>
+  <ul class="user-list">
+    @foreach (Guid userId in Model.Game.UserIds)
+    {
+      if (!store.Users.TryGetValue(userId, out User? user) || user is null)
+      {
+        <li id="@(userId)">User-@(userId)</li>
+      }
+      else
+      {
+        <li id="@(user.Id)">@(user.Username)</li>
+      }
+    }
+  </ul>
+</aside>
+
+@section scripts {
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+  <script src="~/js/pages/active-game.js" type="module"></script>
+}

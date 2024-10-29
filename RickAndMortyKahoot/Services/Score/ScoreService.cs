@@ -1,4 +1,4 @@
-﻿using RickAndMortyKahoot.Models;
+﻿using RickAndMortyKahoot.Models.Games;
 using RickAndMortyKahoot.Models.Questions;
 using RickAndMortyKahoot.Models.Users;
 using RickAndMortyKahoot.Services.Question;
@@ -11,6 +11,10 @@ public class ScoreService(QuestionService questionService)
   /// [<see cref="User.Id"/>, score]
   /// </summary>
   public Dictionary<Guid, int> Scores { get; set; } = [];
+  /// <summary>
+  /// [<see cref="User.Id"/>, score]
+  /// </summary>
+  public Dictionary<Guid, int> NewScores { get; set; } = [];
 
   public int CalculateScore(Game game, Answer answer, bool timedout)
   {
