@@ -27,7 +27,7 @@ public class ScoreService(QuestionService questionService)
     int score = 0;
     if (isCorrectAnswer) score += ScoreModifier.CORRECT_ANSWER;
     else score += ScoreModifier.WRONG_ANSWER;
-    if (isFastAnswer) score += ScoreModifier.FAST_ANSWER;
+    if (isFastAnswer && isCorrectAnswer) score += ScoreModifier.FAST_ANSWER;
     else if (!timedout) score += ScoreModifier.SUBMITTED_ANSWER;
     else score += ScoreModifier.TIMEDOUT_ANSWER; 
     return score;
@@ -44,6 +44,14 @@ public class ScoreService(QuestionService questionService)
     .OrderBy(entry => entry.Value)
     .ToDictionary();
 
+  public void DeleteScoresFromGame(Game game)
+  {
+    foreach (Guid userId in game.UserIds)
+    {
+      Scores.Remove(userId);
+    }
+  }
+  
   private readonly TimeSpan FAST_ANSWER_THRESHOLD = TimeSpan.FromSeconds(20);
   private bool IsFastAnswer(GameQuestion question, Answer answer)
   {

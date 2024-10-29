@@ -5,13 +5,12 @@ public class Game
 {
   public const int DEFAULT_QUESTIONS_LENGTH = 10;
 
-  public Game() : this(Guid.NewGuid(), Enumerable.Range(0, 10).Select(_ => new GameQuestion()).ToList()) {}
-  public Game(Guid hostId, List<GameQuestion> questions)
+  public Game() : this(Guid.NewGuid(), Enumerable.Range(0, 10).Select(_ => new GameQuestion()).ToList()) { }
+  public Game(Guid hostId, List<GameQuestion> questions, int? limit = null)
   {
     HostId = hostId;
     UserIds = [hostId];
-
-    if (questions.Count < DEFAULT_QUESTIONS_LENGTH) throw new IndexOutOfRangeException($"Questions must at least be of lengh {DEFAULT_QUESTIONS_LENGTH}");
+    Limit = limit ?? DEFAULT_QUESTIONS_LENGTH;
     Questions = questions;
   }
 
@@ -23,5 +22,6 @@ public class Game
   public List<GameQuestion> Questions { get; set; }
   public GameQuestion? CurrentQuestion { get; set; } = null;
 
-    public bool IsActive { get; set; } = false;
+  public bool IsActive { get; set; } = false;
+  public int Limit { get; }
 }

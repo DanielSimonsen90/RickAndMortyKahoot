@@ -12,7 +12,7 @@ public partial class KahootHub
     var game = store.FindGameContainingUser(userId);
     if (game is not null) throw new UserAlreadyOwnsGameException(game);
 
-    game = new Game(userId, questionService.GetGameQuestions(amountOfQuestions));
+    game = new Game(userId, questionService.GetGameQuestions(amountOfQuestions), amountOfQuestions);
     store.Games.Add(game.Id, game);
     
     user.GameId = game.Id;
@@ -28,7 +28,25 @@ public partial class KahootHub
     if (!store.Games.TryGetValue(gameId, out Game? game)) throw new InvalidGameException();
 
     game.IsActive = true;
+    game.Questions = questionService.GetGameQuestions(game.Limit);
+    store.Games[gameId] = game;
 
     await DispatchHubEvent(gameId, Events.GAME_START);
+  });
+
+  public async Task Endgame(Guid gameId, Guid userId) => await OnRecieveAction(Actions.END_GAME, async () =>
+  {
+    if (!store.Users.TryGetValue(userId, out User? user)) throw new InvalidUserException();
+    if (!store.Games.TryGetValue(gameId, out Game? game)) throw new InvalidGameException();
+    if (game.HostId != userId) throw new NotHostException();
+    if (!game.IsActive) throw new InvalidGameException();
+
+    game.IsActive = false;
+    store.Games[gameId] = game;
+
+    var scores = scoreService.GetHighscores(game).ToArray();
+    scoreService.DeleteScoresFromGame(game);
+
+    await DispatchHubEvent(gameId, Events.GAME_END, scores);
   });
 }

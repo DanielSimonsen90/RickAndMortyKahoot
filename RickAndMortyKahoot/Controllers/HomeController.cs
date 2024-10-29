@@ -12,9 +12,6 @@ namespace RickAndMortyKahoot.Controllers
   {
     public IActionResult Index(Guid? userId)
     {
-#if false
-      if (store.CurrentUser is null) return UserRegisterSubmit(new() { Username = "Danho" });
-#endif
       var vm = new UserViewModel(userId, store.TemporaryUser);
       store.TemporaryUser = null;
       return View(vm);

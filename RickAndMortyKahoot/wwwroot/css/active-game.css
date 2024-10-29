@@ -21,6 +21,7 @@ main > header h1 {
 }
 #current-question .question header h1 {
   text-align: center;
+  max-width: 50ch;
 }
 #current-question .question header h1 strong {
   text-decoration: underline;
@@ -64,6 +65,7 @@ main > header h1 {
   width: -moz-max-content;
   width: max-content;
   margin-inline: auto;
+  grid-area: answer;
 }
 #correct-answer p {
   font-size: 1.5rem;
@@ -81,6 +83,7 @@ main > header h1 {
 }
 #correct-answer #score h2 {
   margin: 0.5em 0;
+  text-align: center;
 }
 
 #questions-progress::before {
@@ -88,4 +91,8 @@ main > header h1 {
 }
 #questions-progress::after {
   content: ")";
+}
+
+#end-game {
+  margin-top: 1em;
 }

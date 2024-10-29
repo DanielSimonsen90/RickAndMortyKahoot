@@ -13,6 +13,7 @@ public partial class QuestionService(List<QuestionModel> questions)
   public List<QuestionModel> Questions { get; set; } = questions;
   
   public List<GameQuestion> GetGameQuestions(int? limit = null) => Questions
+    .OrderRandomly()
     .Take(limit ?? Questions.Count)
     .Select(question => new GameQuestion(
       title: question.Title,

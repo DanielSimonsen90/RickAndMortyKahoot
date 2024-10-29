@@ -13,11 +13,20 @@ public partial class KahootHub
     if (!store.Games.TryGetValue(gameId, out Game? game)) throw new InvalidGameException();
     if (game.HostId != userId) throw new NotHostException();
 
-    GameQuestion question = questionService.GetRandomGameQuestion(game);
-    game.CurrentQuestion = question;
-    store.Games[gameId] = game;
+    try
+    {
+      GameQuestion question = questionService.GetRandomGameQuestion(game);
+      game.CurrentQuestion = question;
+      store.Games[gameId] = game;
 
-    await DispatchHubEvent(gameId, Events.NEW_QUESTION, question);
+      await DispatchHubEvent(gameId, Events.NEW_QUESTION, question);
+    } 
+    catch (AllQuestionsAnsweredException)
+    {
+      var scores = scoreService.GetHighscores(game);
+      scoreService.DeleteScoresFromGame(game);
+      await DispatchHubEvent(gameId, Events.GAME_END, scores);
+    }
   });
 
   public async Task SubmitAnswer(Guid gameId, Answer answer) => await OnRecieveAction(Actions.SUBMIT_ANSWER, async () =>

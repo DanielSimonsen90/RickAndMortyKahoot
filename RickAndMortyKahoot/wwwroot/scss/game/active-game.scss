@@ -23,6 +23,7 @@ main>header {
 
       h1 {
         text-align: center;
+        max-width: 50ch;
 
         strong {
           text-decoration: underline;
@@ -77,6 +78,7 @@ main>header {
 #correct-answer {
   width: max-content;
   margin-inline: auto;
+  grid-area: answer;
 
   p {
     font-size: 1.5rem;
@@ -96,6 +98,7 @@ main>header {
 
     h2 {
       margin: .5em 0;
+      text-align: center;
     }
   }
 }
@@ -108,4 +111,8 @@ main>header {
   &::after {
     content: ')';
   }
+}
+
+#end-game {
+  margin-top: 1em;
 }

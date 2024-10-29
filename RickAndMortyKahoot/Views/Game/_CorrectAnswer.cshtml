@@ -5,23 +5,4 @@
 @inject ProjectStore store
 
 <p>The correct answer was <span class="correct-answer-value">@(Model.Question.Choices[Model.Answer.Index])</span>!</p>
-<div id="score">
-  <h2>Scores</h2>
-  <ul class="score-list">
-    @foreach (KeyValuePair<Guid, int> score in Model.Score)
-    {
-      @if (!store.Users.TryGetValue(score.Key, out User? user) || user is null)
-      {
-        <li class="user-score">
-          <strong class="user-score__username">User-@(score.Key)</strong> <span class="user-score__value">@(score.Value)</span>
-        </li>
-      }
-      else
-      {
-        <li class="user-score">
-          <strong class="user-score__username">@(user.Username)</strong>: <span class="user-score__value">@(Model.FormatScore(score.Value))</span>
-        </li>
-      }
-    }
-  </ul>
-</div>
+<partial name="_ScoreList" model="@Model" />
