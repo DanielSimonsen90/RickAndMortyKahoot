@@ -56,7 +56,7 @@ public class ScoreService(QuestionService questionService)
   /// <exception cref="NotImplementedException"></exception>
   public Dictionary<Guid, int> GetHighscores(Game game) =>  Scores
     .Where(entry => game.UserIds.Contains(entry.Key))
-    .OrderBy(entry => entry.Value)
+    .OrderByDescending(entry => entry.Value)
     .ToDictionary();
 
   /// <summary>

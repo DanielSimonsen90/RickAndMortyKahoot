@@ -1,6 +1,7 @@
 ﻿using RickAndMortyKahoot.Models.Games;
 using RickAndMortyKahoot.Models.Users;
 using RickAndMortyKahoot.Hubs.Kahoot;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace RickAndMortyKahoot.Stores;
 
@@ -50,5 +51,15 @@ public class ProjectStore
   /// <returns><see cref="Game"/> with the given <paramref name="inviteCode"/> or null if not found</returns>
   public Game? FindGameByInviteCode(Guid inviteCode) => Games
     .FirstOrDefault(entry => entry.Value.InviteCode == inviteCode)
-    .Value;
+  .Value;
+
+  /// <summary>
+  /// Clears all properties carrying data
+  /// </summary>
+  public void Clear()
+  {
+    Connections.Clear();
+    Games.Clear();
+    Users.Clear();
+  }
 }

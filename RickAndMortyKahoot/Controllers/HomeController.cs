@@ -39,4 +39,16 @@ public class HomeController(ProjectStore store) : Controller
     // Redirect to index page with userId
     return RedirectToAction(nameof(Index), new { userId = user.Id });
   }
+
+  /// <summary>
+  /// Clears the cache, so the app doesn't use too much memory in production
+  /// </summary>
+  /// <returns></returns>
+  [HttpGet("ClearCache")]
+  public IActionResult ClearCache()
+  {
+    store.Clear();
+
+    return Ok();
+  }
 }

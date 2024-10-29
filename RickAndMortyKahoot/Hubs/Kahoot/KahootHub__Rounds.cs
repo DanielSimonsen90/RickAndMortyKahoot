@@ -115,6 +115,7 @@ public partial class KahootHub
     // Get scores for all users in the game
     var scores = scoreService.Scores
       .Where(pair => game.UserIds.Contains(pair.Key))
+      .OrderByDescending(pair => pair.Value)
       .ToDictionary();
 
     // Update references

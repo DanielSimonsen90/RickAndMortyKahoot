@@ -15,3 +15,12 @@ function closeModal(id: string) {
   const modal = document.getElementById(id) as HTMLDialogElement;
   modal.close();
 }
+
+function clearCache() {
+  // if 200, alert success
+  $.get('/ClearCache').done(function (data) {
+    alert('Cache cleared');
+  }).fail(function (data) {
+    alert('Failed to clear cache');
+  });
+}

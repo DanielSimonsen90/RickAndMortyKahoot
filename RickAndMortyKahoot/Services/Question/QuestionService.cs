@@ -84,12 +84,17 @@ public partial class QuestionService(List<QuestionModel> questions)
     var locationQs = DefineLocationQuestions(locations);
 
     // Combine all questions and return
-    return 
+    List<QuestionModel> result =
     [
       .. DefineCharacterQuestions(characters),
       .. DefineEpisodeQuestions(episodes),
       .. DefineLocationQuestions(locations)
     ];
+
+    // In occasion, choices or answers return empty strings - filter those away
+    return result
+      .Where(q => q.Choices.Any(choice => choice == string.Empty) || q.Answer == string.Empty)
+      .ToList();
   }
 
   /// <summary>
