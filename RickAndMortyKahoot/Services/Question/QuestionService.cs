@@ -61,6 +61,14 @@ public partial class QuestionService(List<QuestionModel> questions)
   /// <param name="answer">The answer to the <see cref="question"/></param>
   /// <returns>If the <see cref="answer"/> is correct</returns>
   public bool IsCorrectAnswer(QuestionModel question, Answer answer) => question.AnswerIndex == answer.Index;
+  
+  /// <summary>
+  /// Clears the cache of <see cref="Question"/>
+  /// </summary>
+  public void Clear()
+  {
+    Questions.Clear();
+  }
 
   #region Define Questions
   /// <summary>

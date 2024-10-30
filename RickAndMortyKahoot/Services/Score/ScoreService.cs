@@ -90,4 +90,13 @@ public class ScoreService(QuestionService questionService)
 
     return answerTime <= FAST_ANSWER_THRESHOLD;
   }
+
+  /// <summary>
+  /// Clears the cache of <see cref="Scores"/> & <see cref="NewScores"/>
+  /// </summary>
+  public void Clear()
+  {
+    Scores.Clear();
+    NewScores.Clear();
+  }
 }

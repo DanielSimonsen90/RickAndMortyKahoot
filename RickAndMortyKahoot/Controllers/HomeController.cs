@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RickAndMortyKahoot.Models.Users;
+using RickAndMortyKahoot.Services.Question;
+using RickAndMortyKahoot.Services.Score;
 using RickAndMortyKahoot.Stores;
 using RickAndMortyKahoot.ViewModels;
 
@@ -7,7 +9,10 @@ namespace RickAndMortyKahoot.Controllers;
 /// <summary>
 /// Controller used to handle Home-related requests
 /// </summary>
-public class HomeController(ProjectStore store) : Controller
+public class HomeController(
+  ProjectStore store,
+  ScoreService scoreService,
+  QuestionService questionService) : Controller
 {
   /// <summary>
   /// The home page of the application
@@ -48,6 +53,8 @@ public class HomeController(ProjectStore store) : Controller
   public IActionResult ClearCache()
   {
     store.Clear();
+    scoreService.Clear();
+    questionService.Clear();
 
     return Ok();
   }
